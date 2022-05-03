@@ -1,0 +1,22 @@
+[ libDataFormats.so libPhysics.so ]
+# List of selected classes
+class Electron
+class Event
+class FatJet
+class Gen
+class Jet
+class LHE
+class Lepton
+class Muon
+class Particle
+class Photon
+header Electron.h
+header Event.h
+header FatJet.h
+header Gen.h
+header Jet.h
+header LHE.h
+header Lepton.h
+header Muon.h
+header Particle.h
+header Photon.h
