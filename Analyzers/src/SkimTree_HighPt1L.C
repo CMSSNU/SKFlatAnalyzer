@@ -1,10 +1,16 @@
-#include "SkimTree_HighPt1L1J.h"
+#include "SkimTree_HighPt1L.h"
 
-void SkimTree_HighPt1L1J::initializeAnalyzer(){
+void SkimTree_HighPt1L::initializeAnalyzer(){
 
   outfile->cd();
-  cout << "[SkimTree_HighPt1L1J::initializeAnalyzer()] gDirectory = " << gDirectory->GetName() << endl;
+  cout << "[SkimTree_HighPt1L::initializeAnalyzer()] gDirectory = " << gDirectory->GetName() << endl;
   newtree = fChain->CloneTree(0);
+
+  if(!IsDATA){
+    newtree->SetBranchStatus("gen_*",0);
+    newtree->SetBranchStatus("LHE_*",0);
+    newtree->SetBranchStatus("gen_weight",1); // for MCweight()
+  }
 
   triggers.clear();
   if(DataYear==2016){
@@ -37,23 +43,24 @@ void SkimTree_HighPt1L1J::initializeAnalyzer(){
     };
   }
   else{
-    cout << "[SkimTree_HighPt1L1J::initializeAnalyzer] DataYear is wrong : " << DataYear << endl;
+    cout << "[SkimTree_HighPt1L::initializeAnalyzer] DataYear is wrong : " << DataYear << endl;
   }
 
-  cout << "[SkimTree_HighPt1L1J::initializeAnalyzer] triggers to skim = " << endl;
+  cout << "[SkimTree_HighPt1L::initializeAnalyzer] triggers to skim = " << endl;
   for(unsigned int i=0; i<triggers.size(); i++){
-    cout << "[SkimTree_HighPt1L1J::initializeAnalyzer]   " << triggers.at(i) << endl;
+    cout << "[SkimTree_HighPt1L::initializeAnalyzer]   " << triggers.at(i) << endl;
   }
 
   LeptonPtCut = 40.;
+  AK4JetPtCut = 25.;
   AK8JetPtCut = 170.;
 
-  cout << "[SkimTree_HighPt1L1J::initializeAnalyzer] LeptonPtCut = " << LeptonPtCut << endl;
-  cout << "[SkimTree_HighPt1L1J::initializeAnalyzer] AK8JetPtCut = " << AK8JetPtCut << endl;
+  cout << "[SkimTree_HighPt1L::initializeAnalyzer] LeptonPtCut = " << LeptonPtCut << endl;
+  cout << "[SkimTree_HighPt1L::initializeAnalyzer] AK8JetPtCut = " << AK8JetPtCut << endl;
 
 }
 
-void SkimTree_HighPt1L1J::executeEvent(){
+void SkimTree_HighPt1L::executeEvent(){
 
   Event ev;
   ev.SetTrigger(*HLT_TriggerName);
@@ -73,15 +80,6 @@ void SkimTree_HighPt1L1J::executeEvent(){
 
   if (Nelectron + Nmuon == 0) return;
 
-  //==== Skim 3) Jets
-
-  vector<FatJet> allfatjets = puppiCorr->Correct( GetFatJets("tight", AK8JetPtCut, 2.4) ); //==== corret SDMass
-  int Nfatjet_SDMassCut = 0;
-  for(unsigned int i=0; i<allfatjets.size(); i++){
-    if(allfatjets.at(i).SDMass()>40.) Nfatjet_SDMassCut++;
-  }
-
-  if( Nfatjet_SDMassCut == 0 ) return;
 
   //=============================
   //==== If survived, fill tree
@@ -91,21 +89,21 @@ void SkimTree_HighPt1L1J::executeEvent(){
 
 }
 
-void SkimTree_HighPt1L1J::executeEventFromParameter(AnalyzerParameter param){
+void SkimTree_HighPt1L::executeEventFromParameter(AnalyzerParameter param){
 
 }
 
-SkimTree_HighPt1L1J::SkimTree_HighPt1L1J(){
+SkimTree_HighPt1L::SkimTree_HighPt1L(){
 
   newtree = NULL;
 
 }
 
-SkimTree_HighPt1L1J::~SkimTree_HighPt1L1J(){
+SkimTree_HighPt1L::~SkimTree_HighPt1L(){
 
 }
 
-void SkimTree_HighPt1L1J::WriteHist(){
+void SkimTree_HighPt1L::WriteHist(){
 
   outfile->mkdir("recoTree");
   outfile->cd("recoTree");

@@ -1,9 +1,9 @@
-#ifndef SkimTree_HighPt1L1J_h
-#define SkimTree_HighPt1L1J_h
+#ifndef SkimTree_HighPt1LJets_h
+#define SkimTree_HighPt1LJets_h
 
 #include "AnalyzerCore.h"
 
-class SkimTree_HighPt1L1J : public AnalyzerCore {
+class SkimTree_HighPt1LJets : public AnalyzerCore {
 
 public:
 
@@ -11,15 +11,15 @@ public:
   void executeEventFromParameter(AnalyzerParameter param);
   void executeEvent();
 
-  SkimTree_HighPt1L1J();
-  ~SkimTree_HighPt1L1J();
+  SkimTree_HighPt1LJets();
+  ~SkimTree_HighPt1LJets();
 
   TTree *newtree;
 
   vector<TString> triggers;
   void WriteHist();
 
-  double LeptonPtCut, AK8JetPtCut;
+  double LeptonPtCut, AK4JetPtCut, AK8JetPtCut;
 
 };
 
