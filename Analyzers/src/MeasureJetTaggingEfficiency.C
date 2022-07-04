@@ -62,8 +62,8 @@ void MeasureJetTaggingEfficiency::executeEvent(){
 
   vector<Jet> jets = GetJets("tightLepVeto", 20., 2.5);
   float weight = 1.;
-  float w_Gen  = ev.MCweight();
-  float w_Norm = weight_norm_1invpb*ev.GetTriggerLumi("Full");
+  float w_Gen  = MCweight();
+  float w_Norm = ev.GetTriggerLumi("Full");
   float w_PU   = GetPileUpWeight(nPileUp, 0);
   weight *= w_Gen*w_Norm*w_PU; 
   //tagging performance depends on PU, so it is better reweight to proper PU profile

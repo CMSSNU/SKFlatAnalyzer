@@ -40,7 +40,7 @@ public :
    bool IsFastSim;
    int DataYear;
    TString DataEra;
-   double xsec, sumW, weight_norm_1invpb;
+   double xsec, sumW, sumSign;
    vector<TString> Userflags;
 
    virtual void Init();
@@ -85,6 +85,7 @@ public :
    ULong64_t       event;
    Int_t           lumi;
    Float_t         Rho;
+   Float_t         RhoNC;
    Int_t           nPV;
    Float_t         L1PrefireReweight_Central;
    Float_t         L1PrefireReweight_Up;
@@ -114,18 +115,14 @@ public :
    vector<float>   *jet_area;
    vector<int>     *jet_partonFlavour;
    vector<int>     *jet_hadronFlavour;
-   vector<float>   *jet_CSVv2;
+   vector<int>     *jet_GenHFHadronMatcher_flavour;
+   vector<int>     *jet_GenHFHadronMatcher_origin;
    vector<float>   *jet_DeepCSV;
-   vector<float>   *jet_CvsL;
-   vector<float>   *jet_CvsB;
-   vector<float>   *jet_DeepFlavour_b;
-   vector<float>   *jet_DeepFlavour_bb;
-   vector<float>   *jet_DeepFlavour_lepb;
-   vector<float>   *jet_DeepFlavour_c;
-   vector<float>   *jet_DeepFlavour_uds;
-   vector<float>   *jet_DeepFlavour_g;
-   vector<float>   *jet_DeepCvsL;
-   vector<float>   *jet_DeepCvsB;
+   vector<float>   *jet_DeepCSV_CvsL;
+   vector<float>   *jet_DeepCSV_CvsB;
+   vector<float>   *jet_DeepJet;
+   vector<float>   *jet_DeepJet_CvsL;
+   vector<float>   *jet_DeepJet_CvsB;
    vector<float>   *jet_chargedHadronEnergyFraction;
    vector<float>   *jet_neutralHadronEnergyFraction;
    vector<float>   *jet_neutralEmEnergyFraction;
@@ -145,6 +142,10 @@ public :
    vector<float>   *jet_smearedRes;
    vector<float>   *jet_smearedResUp;
    vector<float>   *jet_smearedResDown;
+   vector<float>   *jet_bJetNN_corr;
+   vector<float>   *jet_bJetNN_res;
+   vector<float>   *jet_cJetNN_corr;
+   vector<float>   *jet_cJetNN_res;
    vector<float>   *jet_JECL1FastJet;
    vector<float>   *jet_JECFull;
    vector<float>   *fatjet_pt;
@@ -154,18 +155,20 @@ public :
    vector<float>   *fatjet_area;
    vector<int>     *fatjet_partonFlavour;
    vector<int>     *fatjet_hadronFlavour;
-   vector<float>   *fatjet_CSVv2;
    vector<float>   *fatjet_DeepCSV;
-   vector<float>   *fatjet_DeepFlavour_b;
-   vector<float>   *fatjet_DeepFlavour_bb;
-   vector<float>   *fatjet_DeepFlavour_lepb;
-   vector<float>   *fatjet_DeepFlavour_c;
-   vector<float>   *fatjet_DeepFlavour_uds;
-   vector<float>   *fatjet_DeepFlavour_g;
-   vector<float>   *fatjet_CvsL;
-   vector<float>   *fatjet_CvsB;
-   vector<float>   *fatjet_DeepCvsL;
-   vector<float>   *fatjet_DeepCvsB;
+   vector<float>   *fatjet_DeepCSV_CvsL;
+   vector<float>   *fatjet_DeepCSV_CvsB;
+   vector<float>   *fatjet_particleNet_TvsQCD;
+   vector<float>   *fatjet_particleNet_WvsQCD;
+   vector<float>   *fatjet_particleNet_ZvsQCD;
+   vector<float>   *fatjet_particleNet_HbbvsQCD;
+   vector<float>   *fatjet_particleNet_HccvsQCD;
+   vector<float>   *fatjet_particleNet_H4qvsQCD;
+   vector<float>   *fatjet_particleNet_QCD;
+   vector<float>   *fatjet_particleNetMD_Xbb;
+   vector<float>   *fatjet_particleNetMD_Xcc;
+   vector<float>   *fatjet_particleNetMD_Xqq;
+   vector<float>   *fatjet_particleNetMD_QCD;
    vector<bool>    *fatjet_tightJetID;
    vector<bool>    *fatjet_tightLepVetoJetID;
    vector<int>     *fatjet_partonPdgId;
@@ -245,6 +248,7 @@ public :
    vector<int>     *electron_mHits;
    vector<int>     *electron_ecalDriven;
    vector<float>   *electron_r9;
+   vector<float>   *electron_l1et;
    vector<float>   *electron_scEnergy;
    vector<float>   *electron_scPreEnergy;
    vector<float>   *electron_scRawEnergy;
@@ -281,6 +285,8 @@ public :
    vector<unsigned int> *muon_TypeBit;
    vector<unsigned int> *muon_IDBit;
    vector<bool>    *muon_ishighpt;
+   vector<bool>    *muon_ismedium_hip;
+   vector<bool>    *muon_ismedium_nohip;
    vector<float>   *muon_dB;
    vector<float>   *muon_phi;
    vector<float>   *muon_eta;
@@ -373,6 +379,7 @@ public :
    vector<float>   *weight_AlphaS;
    vector<float>   *weight_PDF;
    vector<float>   *weight_Scale;
+   vector<float>   *weight_PSSyst;
    vector<float>   *weight_alpsfact;
    vector<float>   *weight_largeptscales;
    vector<float>   *weight_q0;
@@ -438,15 +445,34 @@ public :
    Float_t         pfMET_Type1_PhiCor_pt;
    Float_t         pfMET_Type1_PhiCor_phi;
    Float_t         pfMET_Type1_PhiCor_SumEt;
-   vector<float>   *pfMET_pt_shifts;
-   vector<float>   *pfMET_phi_shifts;
-   vector<float>   *pfMET_SumEt_shifts;
    vector<float>   *pfMET_Type1_pt_shifts;
    vector<float>   *pfMET_Type1_phi_shifts;
    vector<float>   *pfMET_Type1_SumEt_shifts;
    vector<float>   *pfMET_Type1_PhiCor_pt_shifts;
    vector<float>   *pfMET_Type1_PhiCor_phi_shifts;
    vector<float>   *pfMET_Type1_PhiCor_SumEt_shifts;
+   Float_t         PuppiMET_pt;
+   Float_t         PuppiMET_phi;
+   Float_t         PuppiMET_SumEt;
+   Float_t         PuppiMET_Type1_pt;
+   Float_t         PuppiMET_Type1_phi;
+   Float_t         PuppiMET_Type1_SumEt;
+   Float_t         PuppiMET_Type1_PhiCor_pt;
+   Float_t         PuppiMET_Type1_PhiCor_phi;
+   Float_t         PuppiMET_Type1_PhiCor_SumEt;
+   vector<float>   *PuppiMET_Type1_pt_shifts;
+   vector<float>   *PuppiMET_Type1_phi_shifts;
+   vector<float>   *PuppiMET_Type1_SumEt_shifts;
+   vector<float>   *tau_phi;
+   vector<float>   *tau_eta;
+   vector<float>   *tau_pt;
+   vector<float>   *tau_mass;
+   vector<float>   *tau_dz;
+   vector<float>   *tau_dxy;
+   vector<int>     *tau_decaymode;
+   vector<int>     *tau_charge;
+   vector<unsigned int> *tau_IDBit;
+   vector<bool>    *tau_idDecayModeNewDMs;
 
    // List of branches
    TBranch        *b_IsData;   //!
@@ -455,6 +481,7 @@ public :
    TBranch        *b_evtNum;   //!
    TBranch        *b_lumiBlock;   //!
    TBranch        *b_Rho;   //!
+   TBranch        *b_RhoNC;   //!
    TBranch        *b_nPV;   //!
    TBranch        *b_L1PrefireReweight_Central;   //!
    TBranch        *b_L1PrefireReweight_Up;   //!
@@ -484,18 +511,14 @@ public :
    TBranch        *b_jet_area;   //!
    TBranch        *b_jet_partonFlavour;   //!
    TBranch        *b_jet_hadronFlavour;   //!
-   TBranch        *b_jet_CSVv2;   //!
+   TBranch        *b_jet_GenHFHadronMatcher_flavour;   //!
+   TBranch        *b_jet_GenHFHadronMatcher_origin;   //!
    TBranch        *b_jet_DeepCSV;   //!
-   TBranch        *b_jet_CvsL;   //!
-   TBranch        *b_jet_CvsB;   //!
-   TBranch        *b_jet_DeepFlavour_b;   //!
-   TBranch        *b_jet_DeepFlavour_bb;   //!
-   TBranch        *b_jet_DeepFlavour_lepb;   //!
-   TBranch        *b_jet_DeepFlavour_c;   //!
-   TBranch        *b_jet_DeepFlavour_uds;   //!
-   TBranch        *b_jet_DeepFlavour_g;   //!
-   TBranch        *b_jet_DeepCvsL;   //!
-   TBranch        *b_jet_DeepCvsB;   //!
+   TBranch        *b_jet_DeepCSV_CvsL;   //!
+   TBranch        *b_jet_DeepCSV_CvsB;   //!
+   TBranch        *b_jet_DeepJet;   //!
+   TBranch        *b_jet_DeepJet_CvsL;   //!
+   TBranch        *b_jet_DeepJet_CvsB;   //!
    TBranch        *b_jet_chargedHadronEnergyFraction;   //!
    TBranch        *b_jet_neutralHadronEnergyFraction;   //!
    TBranch        *b_jet_neutralEmEnergyFraction;   //!
@@ -515,6 +538,10 @@ public :
    TBranch        *b_jet_smearedRes;   //!
    TBranch        *b_jet_smearedResUp;   //!
    TBranch        *b_jet_smearedResDown;   //!
+   TBranch        *b_jet_bJetNN_corr;   //!
+   TBranch        *b_jet_bJetNN_res;   //!
+   TBranch        *b_jet_cJetNN_corr;   //!
+   TBranch        *b_jet_cJetNN_res;   //!
    TBranch        *b_jet_JECL1FastJet;   //!
    TBranch        *b_jet_JECFull;   //!
    TBranch        *b_fatjet_pt;   //!
@@ -524,18 +551,20 @@ public :
    TBranch        *b_fatjet_area;   //!
    TBranch        *b_fatjet_partonFlavour;   //!
    TBranch        *b_fatjet_hadronFlavour;   //!
-   TBranch        *b_fatjet_CSVv2;   //!
    TBranch        *b_fatjet_DeepCSV;   //!
-   TBranch        *b_fatjet_DeepFlavour_b;   //!
-   TBranch        *b_fatjet_DeepFlavour_bb;   //!
-   TBranch        *b_fatjet_DeepFlavour_lepb;   //!
-   TBranch        *b_fatjet_DeepFlavour_c;   //!
-   TBranch        *b_fatjet_DeepFlavour_uds;   //!
-   TBranch        *b_fatjet_DeepFlavour_g;   //!
-   TBranch        *b_fatjet_CvsL;   //!
-   TBranch        *b_fatjet_CvsB;   //!
-   TBranch        *b_fatjet_DeepCvsL;   //!
-   TBranch        *b_fatjet_DeepCvsB;   //!
+   TBranch        *b_fatjet_DeepCSV_CvsL;   //!
+   TBranch        *b_fatjet_DeepCSV_CvsB;   //!
+   TBranch        *b_fatjet_particleNet_TvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_WvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_ZvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_HbbvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_HccvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_H4qvsQCD;   //!
+   TBranch        *b_fatjet_particleNet_QCD;   //!
+   TBranch        *b_fatjet_particleNetMD_Xbb;   //!
+   TBranch        *b_fatjet_particleNetMD_Xcc;   //!
+   TBranch        *b_fatjet_particleNetMD_Xqq;   //!
+   TBranch        *b_fatjet_particleNetMD_QCD;   //!
    TBranch        *b_fatjet_tightJetID;   //!
    TBranch        *b_fatjet_tightLepVetoJetID;   //!
    TBranch        *b_fatjet_partonPdgId;   //!
@@ -615,6 +644,7 @@ public :
    TBranch        *b_electron_mHits;   //!
    TBranch        *b_electron_ecalDriven;   //!
    TBranch        *b_electron_r9;   //!
+   TBranch        *b_electron_l1et;   //!
    TBranch        *b_electron_scEnergy;   //!
    TBranch        *b_electron_scPreEnergy;   //!
    TBranch        *b_electron_scRawEnergy;   //!
@@ -651,6 +681,8 @@ public :
    TBranch        *b_muon_TypeBit;   //!
    TBranch        *b_muon_IDBit;   //!
    TBranch        *b_muon_ishighpt;   //!
+   TBranch        *b_muon_ismedium_hip;   //!
+   TBranch        *b_muon_ismedium_nohip;   //!
    TBranch        *b_muon_dB;   //!
    TBranch        *b_muon_phi;   //!
    TBranch        *b_muon_eta;   //!
@@ -743,6 +775,7 @@ public :
    TBranch        *b_weight_AlphaS;   //!
    TBranch        *b_weight_PDF;   //!
    TBranch        *b_weight_Scale;   //!
+   TBranch        *b_weight_PSSyst;   //!
    TBranch        *b_weight_alpsfact;   //!
    TBranch        *b_weight_largeptscales;   //!
    TBranch        *b_weight_q0;   //!
@@ -808,15 +841,34 @@ public :
    TBranch        *b_pfMET_Type1_PhiCor_pt;   //!
    TBranch        *b_pfMET_Type1_PhiCor_phi;   //!
    TBranch        *b_pfMET_Type1_PhiCor_SumEt;   //!
-   TBranch        *b_pfMET_pt_shifts;   //!
-   TBranch        *b_pfMET_phi_shifts;   //!
-   TBranch        *b_pfMET_SumEt_shifts;   //!
    TBranch        *b_pfMET_Type1_pt_shifts;   //!
    TBranch        *b_pfMET_Type1_phi_shifts;   //!
    TBranch        *b_pfMET_Type1_SumEt_shifts;   //!
    TBranch        *b_pfMET_Type1_PhiCor_pt_shifts;   //!
    TBranch        *b_pfMET_Type1_PhiCor_phi_shifts;   //!
    TBranch        *b_pfMET_Type1_PhiCor_SumEt_shifts;   //!
+   TBranch        *b_PuppiMET_pt;   //!
+   TBranch        *b_PuppiMET_phi;   //!
+   TBranch        *b_PuppiMET_SumEt;   //!
+   TBranch        *b_PuppiMET_Type1_pt;   //!
+   TBranch        *b_PuppiMET_Type1_phi;   //!
+   TBranch        *b_PuppiMET_Type1_SumEt;   //!
+   TBranch        *b_PuppiMET_Type1_PhiCor_pt;   //!
+   TBranch        *b_PuppiMET_Type1_PhiCor_phi;   //!
+   TBranch        *b_PuppiMET_Type1_PhiCor_SumEt;   //!
+   TBranch        *b_PuppiMET_Type1_pt_shifts;   //!
+   TBranch        *b_PuppiMET_Type1_phi_shifts;   //!
+   TBranch        *b_PuppiMET_Type1_SumEt_shifts;   //!
+   TBranch        *b_tau_phi;   //!
+   TBranch        *b_tau_eta;   //!
+   TBranch        *b_tau_pt;   //!
+   TBranch        *b_tau_mass;   //!
+   TBranch        *b_tau_dz;   //!
+   TBranch        *b_tau_dxy;   //!
+   TBranch        *b_tau_decaymode;   //!
+   TBranch        *b_tau_charge;   //!
+   TBranch        *b_tau_IDBit;   //!
+   TBranch        *b_tau_idDecayModeNewDMs;   //!
 
 };
 

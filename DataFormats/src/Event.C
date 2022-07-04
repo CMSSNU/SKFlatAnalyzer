@@ -3,7 +3,6 @@
 ClassImp(Event)
 
 Event::Event(){
-  j_MCweight = 1.;
   j_nPV = -999;
   j_DataYear = -999;
   j_DataEra = "";
@@ -11,11 +10,6 @@ Event::Event(){
 
 Event::~Event(){
 
-}
-
-void Event::SetMCweight(double genw){
-  if(genw>0) j_MCweight=1.;
-  else j_MCweight=-1.;
 }
 
 void Event::SetnPV(double n){

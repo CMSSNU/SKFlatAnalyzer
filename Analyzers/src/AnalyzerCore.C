@@ -80,7 +80,6 @@ void AnalyzerCore::SetOutfilePath(TString outname){
 Event AnalyzerCore::GetEvent(){
 
   Event ev;
-  if(!IsDATA) ev.SetMCweight(gen_weight);
   ev.SetTrigger(*HLT_TriggerName);
   ev.SetMET(pfMET_Type1_pt,pfMET_Type1_phi);
   ev.SetnPV(nPV);
@@ -120,6 +119,7 @@ std::vector<Muon> AnalyzerCore::GetAllMuons(){
     mu.SetTypeBit(muon_TypeBit->at(i));
     mu.SetIDBit(muon_IDBit->at(i));
     mu.SetisPOGHighPt(muon_ishighpt->at(i));
+    mu.SetPOGMediumHIP(muon_ismedium_hip->at(i),muon_ismedium_nohip->at(i));
     mu.SetChi2(muon_normchi->at(i));
     mu.SetIso(muon_PfChargedHadronIsoR04->at(i),muon_PfNeutralHadronIsoR04->at(i),muon_PfGammaIsoR04->at(i),muon_PFSumPUIsoR04->at(i),muon_trkiso->at(i));
     mu.SetTrackerLayers(muon_trackerLayers->at(i));
@@ -195,6 +195,7 @@ std::vector<Electron> AnalyzerCore::GetAllElectrons(){
     el.SetRho(Rho);
     el.SetIsGsfCtfScPixChargeConsistent(electron_isGsfCtfScPixChargeConsistent->at(i));
     el.SetR9(electron_r9->at(i));
+    el.SetL1Et(electron_l1et->at(i));
 
     el.SetCutBasedIDVariables(
       electron_Full5x5_SigmaIEtaIEta->at(i),
@@ -385,23 +386,20 @@ std::vector<Jet> AnalyzerCore::GetAllJets(){
       jet *= jet_smearedRes->at(i);
       jet.SetResShift( jet_smearedResUp->at(i)/jet_smearedRes->at(i), jet_smearedResDown->at(i)/jet_smearedRes->at(i) );
     }
+    jet.SetBJetNNCorrection(jet_bJetNN_corr->at(i),jet_bJetNN_res->at(i));
+    jet.SetCJetNNCorrection(jet_cJetNN_corr->at(i),jet_cJetNN_res->at(i));
     jet.SetCharge(jet_charge->at(i));
 
     jet.SetArea(jet_area->at(i));
     jet.SetGenFlavours(jet_partonFlavour->at(i), jet_hadronFlavour->at(i));
+    jet.SetGenHFHadronMatcher(jet_GenHFHadronMatcher_flavour->at(i),jet_GenHFHadronMatcher_origin->at(i));
     std::vector<double> tvs = {
-      jet_CSVv2->at(i),
       jet_DeepCSV->at(i),
-      jet_DeepCvsL->at(i),
-      jet_DeepCvsB->at(i),
-      jet_DeepFlavour_b->at(i),
-      jet_DeepFlavour_bb->at(i),
-      jet_DeepFlavour_lepb->at(i),
-      jet_DeepFlavour_c->at(i),
-      jet_DeepFlavour_uds->at(i),
-      jet_DeepFlavour_g->at(i),
-      jet_CvsL->at(i),
-      jet_CvsB->at(i),
+      jet_DeepCSV_CvsL->at(i),
+      jet_DeepCSV_CvsB->at(i),
+      jet_DeepJet->at(i),
+      jet_DeepJet_CvsL->at(i),
+      jet_DeepJet_CvsB->at(i),
     };
     jet.SetTaggerResults(tvs);
     jet.SetEnergyFractions(jet_chargedHadronEnergyFraction->at(i), jet_neutralHadronEnergyFraction->at(i), jet_neutralEmEnergyFraction->at(i), jet_chargedEmEnergyFraction->at(i), jet_muonEnergyFraction->at(i));
@@ -456,18 +454,20 @@ std::vector<FatJet> AnalyzerCore::GetAllFatJets(){
     jet.SetArea(fatjet_area->at(i));
     jet.SetGenFlavours(fatjet_partonFlavour->at(i), fatjet_hadronFlavour->at(i));
     std::vector<double> tvs = {
-      fatjet_CSVv2->at(i),
       fatjet_DeepCSV->at(i),
-      fatjet_DeepCvsL->at(i),
-      fatjet_DeepCvsB->at(i),
-      fatjet_DeepFlavour_b->at(i),
-      fatjet_DeepFlavour_bb->at(i),
-      fatjet_DeepFlavour_lepb->at(i),
-      fatjet_DeepFlavour_c->at(i),
-      fatjet_DeepFlavour_uds->at(i),
-      fatjet_DeepFlavour_g->at(i),
-      fatjet_CvsL->at(i),
-      fatjet_CvsB->at(i),
+      fatjet_DeepCSV_CvsL->at(i),
+      fatjet_DeepCSV_CvsB->at(i),
+      fatjet_particleNet_TvsQCD->at(i),
+      fatjet_particleNet_WvsQCD->at(i),
+      fatjet_particleNet_ZvsQCD->at(i),
+      fatjet_particleNet_HbbvsQCD->at(i),
+      fatjet_particleNet_HccvsQCD->at(i),
+      fatjet_particleNet_H4qvsQCD->at(i),
+      fatjet_particleNet_QCD->at(i),
+      fatjet_particleNetMD_Xbb->at(i),
+      fatjet_particleNetMD_Xcc->at(i),
+      fatjet_particleNetMD_Xqq->at(i),
+      fatjet_particleNetMD_QCD->at(i),
     };
     jet.SetTaggerResults(tvs);
     jet.SetEnergyFractions(fatjet_chargedHadronEnergyFraction->at(i), fatjet_neutralHadronEnergyFraction->at(i), fatjet_neutralEmEnergyFraction->at(i), fatjet_chargedEmEnergyFraction->at(i), fatjet_muonEnergyFraction->at(i));
@@ -933,6 +933,29 @@ void AnalyzerCore::initializeAnalyzerTools(){
   cfEst->SetEra(GetEra());
   cfEst->ReadHistograms();
 
+}
+
+double AnalyzerCore::MCweight(bool usesign, bool norm_1invpb) const {
+  if(IsDATA) return 1.;
+  double weight=gen_weight;
+  //MiNNLO sample has some events with unphysically large weight
+  if(MCSample.Contains("DYJets")&&MCSample.Contains("MiNNLO")){
+    double maxweight=2358.0700*5.;
+    if(abs(weight)>maxweight){
+      weight=weight>0. ? maxweight : -1.0*maxweight;
+    }
+  }
+  
+  if(usesign){
+    if(weight>0) weight=1.0;
+    else if(weight<0) weight=-1.0;
+    else weight=0.0;
+  }
+  if(norm_1invpb){
+    if(usesign) weight*=xsec/sumSign;
+    else weight*=xsec/sumW;
+  }
+  return weight;
 }
 
 double AnalyzerCore::GetPrefireWeight(int sys){

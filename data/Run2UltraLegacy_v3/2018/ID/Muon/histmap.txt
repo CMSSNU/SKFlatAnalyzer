@@ -1,0 +1,12 @@
+### Muon POG UL efficiency
+### https://twiki.cern.ch/twiki/bin/view/CMS/MuonReferenceEffsRun2Legacy
+ID       SF        NUM_TightID_DEN_TrackerMuons            Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root                  NUM_TightID_DEN_TrackerMuons_abseta_pt
+ID       SF        NUM_MediumID_DEN_TrackerMuons           Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root                  NUM_MediumID_DEN_TrackerMuons_abseta_pt
+ID       SF        NUM_HighPtID_DEN_TrackerMuons           Efficiencies_muon_generalTracks_Z_Run2018_UL_ID.root                  NUM_HighPtID_DEN_TrackerMuons_abseta_pt
+ISO      SF        NUM_TightRelIso_DEN_TightIDandIPCut     Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root                 NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt
+ISO      SF        NUM_TightRelIso_DEN_MediumID            Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root                 NUM_TightRelIso_DEN_MediumID_abseta_pt
+ISO      SF        NUM_LooseRelTkIso_DEN_HighPtIDandIPCut  Efficiencies_muon_generalTracks_Z_Run2018_UL_ISO.root                 NUM_LooseRelTkIso_DEN_HighPtIDandIPCut_abseta_pt
+Trigger  Eff_DATA  IsoMu24_POGTight                        Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers.root  NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt_efficiencyData
+Trigger  Eff_MC    IsoMu24_POGTight                        Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers.root  NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt_efficiencyMC
+Trigger  Eff_DATA  Mu50_POGHighPtLooseTrkIso               Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers.root  NUM_Mu50_or_OldMu100_or_TkMu100_DEN_CutBasedIdGlobalHighPt_and_TkIsoLoose_abseta_pt_efficiencyData
+Trigger  Eff_MC    Mu50_POGHighPtLooseTrkIso               Efficiencies_muon_generalTracks_Z_Run2018_UL_SingleMuonTriggers.root  NUM_Mu50_or_OldMu100_or_TkMu100_DEN_CutBasedIdGlobalHighPt_and_TkIsoLoose_abseta_pt_efficiencyMC

@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+DYJetsToTauTau_MiNNLO	DYJetsToTauTau_M-50_AtLeastOneEorMuDecay_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos	1147.39	56388001	47338447.0	1.118488553354e+11

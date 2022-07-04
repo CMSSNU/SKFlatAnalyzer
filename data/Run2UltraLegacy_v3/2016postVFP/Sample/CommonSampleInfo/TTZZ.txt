@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+TTZZ	TTZZ_TuneCP5_13TeV-madgraph-pythia8	0.001386	152000	152000.0	1.520000000000e+05

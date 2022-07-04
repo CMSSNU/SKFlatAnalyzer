@@ -3,7 +3,7 @@ export SKFlat_LIB_PATH=$SKFlat_WD/lib/
 mkdir -p $SKFlat_LIB_PATH
 mkdir -p $SKFlat_WD/tar
 
-export SKFlatV="Run2UltraLegacy_v2"
+export SKFlatV="Run2UltraLegacy_v3"
 mkdir -p $SKFlat_WD/data/$SKFlatV
 export DATA_DIR=$SKFlat_WD/data/$SKFlatV
 
@@ -59,6 +59,10 @@ source $SKFlat_WD/bin/BashColorSets.sh
 
 ## submodules ##
 #source bin/CheckSubmodules.sh
+
+if [ "$1" = "-q" ];then
+    return
+fi
 
 ## Todo list ##
 python python/PrintToDoLists.py

@@ -1,0 +1,12 @@
+### Egamma POG UL efficiency
+### https://twiki.cern.ch/twiki/bin/view/CMS/EgammaUL2016To2018#SFs_for_Electrons_UL_2017
+ID	SF	passMVAID_iso_WP80	egammaEffi.txt_EGM2D_MVA80iso_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passMVAID_noIso_WP80	egammaEffi.txt_EGM2D_MVA80noIso_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passMVAID_iso_WP90	egammaEffi.txt_EGM2D_MVA90iso_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passMVAID_noIso_WP90	egammaEffi.txt_EGM2D_MVA90noIso_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passTightID	egammaEffi.txt_EGM2D_Tight_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passMediumID	egammaEffi.txt_EGM2D_Medium_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passLooseID	egammaEffi.txt_EGM2D_Loose_UL17.root	EGamma_SF2D	TH2F
+ID	SF	passVetoID	egammaEffi.txt_EGM2D_Veto_UL17.root	EGamma_SF2D	TH2F
+RECO	SF	ptgt20	egammaEffi_ptAbove20.txt_EGM2D_UL2017.root	EGamma_SF2D	TH2F
+RECO	SF	ptlt20	egammaEffi_ptBelow20.txt_EGM2D_UL2017.root	EGamma_SF2D	TH2F

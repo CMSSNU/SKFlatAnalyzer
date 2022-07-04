@@ -62,6 +62,10 @@ public:
   inline bool isPOGMedium() const {return PassSelector(CutBasedIdMedium);}
   inline bool isPOGLoose() const {return PassSelector(CutBasedIdLoose);}
 
+  void SetPOGMediumHIP(bool ismedium_hip, bool ismedium_nohip);
+  inline bool isPOGMedium_hip() const {return j_ismedium_hip;} //hip mitigated ID. Default for 2016preVFP data
+  inline bool isPOGMedium_nohip() const {return j_ismedium_nohip;} //ordinary medium ID. Default for 2016 MC
+
   //==== TODO isOLDPOGHighPt returns values from bit, which is before the update
   //==== In UltraLegacy, this should be removed
   inline bool isOLDPOGHighPt() const {return PassSelector(CutBasedIdGlobalHighPt);}
@@ -117,6 +121,8 @@ private:
 
   unsigned int j_TypeBit, j_IDBit;
   bool j_isPOGHighPt;
+  bool j_ismedium_hip;
+  bool j_ismedium_nohip;
   double j_chi2;
   double j_PFCH04, j_PFNH04, j_PFPH04, j_PU04, j_trkiso;
   double j_MiniAODPt, j_MiniAODTunePPt, j_MomentumScaleUp, j_MomentumScaleDown;

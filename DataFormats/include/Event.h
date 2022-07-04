@@ -11,9 +11,6 @@ public:
   Event();
   ~Event();
 
-  void SetMCweight(double genw);
-  inline double MCweight() const { return j_MCweight; }
-
   void SetnPV(double n);
   inline int nPV() const { return j_nPV; }
 
@@ -35,7 +32,6 @@ public:
 
 
 private:
-  double j_MCweight;
   int j_nPV;
   vector<string> j_HLT_TriggerName;
   Particle j_METVector;

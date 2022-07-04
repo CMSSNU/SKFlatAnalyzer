@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+VBFHToTauTau_M125	VBFHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8	0.237	1395000	1393088.0	5.384521947723e+06

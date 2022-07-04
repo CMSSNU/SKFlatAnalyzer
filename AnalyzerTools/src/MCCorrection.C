@@ -1022,20 +1022,30 @@ double MCCorrection::GetJetTaggingCutValue(JetTagging::Tagger tagger, JetTagging
       if(wp==JetTagging::Medium) return 0.6001;
       if(wp==JetTagging::Tight)  return 0.8819;
     }
+    if(tagger==JetTagging::DeepCSV_CvsL){
+      if(wp==JetTagging::Loose) return 0.088;
+      if(wp==JetTagging::Medium) return 0.181;
+      if(wp==JetTagging::Tight) return 0.417;
+    }
+    if(tagger==JetTagging::DeepCSV_CvsB){
+      if(wp==JetTagging::Loose) return 0.214;
+      if(wp==JetTagging::Medium) return 0.228;
+      if(wp==JetTagging::Tight) return 0.138;
+    }
     if(tagger==JetTagging::DeepJet){
       if(wp==JetTagging::Loose)  return 0.0508;
       if(wp==JetTagging::Medium) return 0.2598;
       if(wp==JetTagging::Tight)  return 0.6502;
     }
-    if(tagger==JetTagging::DeepCvsB){
-      if(wp==JetTagging::Loose) return 0.327;
-      if(wp==JetTagging::Medium) return 0.370;
-      if(wp==JetTagging::Tight) return 0.256;
-    }
-    if(tagger==JetTagging::DeepCvsL){
+    if(tagger==JetTagging::DeepJet_CvsL){
       if(wp==JetTagging::Loose) return 0.039;
       if(wp==JetTagging::Medium) return 0.098;
       if(wp==JetTagging::Tight) return 0.270;
+    }
+    if(tagger==JetTagging::DeepJet_CvsB){
+      if(wp==JetTagging::Loose) return 0.327;
+      if(wp==JetTagging::Medium) return 0.370;
+      if(wp==JetTagging::Tight) return 0.256;
     }
   }
   if(DataEra=="2016postVFP"){
@@ -1044,20 +1054,30 @@ double MCCorrection::GetJetTaggingCutValue(JetTagging::Tagger tagger, JetTagging
       if(wp==JetTagging::Medium) return 0.5847;
       if(wp==JetTagging::Tight)  return 0.8767;
     }
+    if(tagger==JetTagging::DeepCSV_CvsL){
+      if(wp==JetTagging::Loose) return 0.088;
+      if(wp==JetTagging::Medium) return 0.180;
+      if(wp==JetTagging::Tight) return 0.407;
+    }
+    if(tagger==JetTagging::DeepCSV_CvsB){
+      if(wp==JetTagging::Loose) return 0.204;
+      if(wp==JetTagging::Medium) return 0.221;
+      if(wp==JetTagging::Tight) return 0.136;
+    }
     if(tagger==JetTagging::DeepJet){
       if(wp==JetTagging::Loose)  return 0.0480;
       if(wp==JetTagging::Medium) return 0.2489;
       if(wp==JetTagging::Tight)  return 0.6377;
     }
-    if(tagger==JetTagging::DeepCvsB){
-      if(wp==JetTagging::Loose) return 0.305;
-      if(wp==JetTagging::Medium) return 0.353;
-      if(wp==JetTagging::Tight) return 0.247;
-    }
-    if(tagger==JetTagging::DeepCvsL){
+    if(tagger==JetTagging::DeepJet_CvsL){
       if(wp==JetTagging::Loose) return 0.039;
       if(wp==JetTagging::Medium) return 0.099;
       if(wp==JetTagging::Tight) return 0.269;
+    }
+    if(tagger==JetTagging::DeepJet_CvsB){
+      if(wp==JetTagging::Loose) return 0.305;
+      if(wp==JetTagging::Medium) return 0.353;
+      if(wp==JetTagging::Tight) return 0.247;
     }
   }
   if(DataEra=="2017"){
@@ -1066,20 +1086,30 @@ double MCCorrection::GetJetTaggingCutValue(JetTagging::Tagger tagger, JetTagging
       if(wp==JetTagging::Medium) return 0.4506;
       if(wp==JetTagging::Tight)  return 0.7738;
     }
+    if(tagger==JetTagging::DeepCSV_CvsL){
+      if(wp==JetTagging::Loose) return 0.04;
+      if(wp==JetTagging::Medium) return 0.144;
+      if(wp==JetTagging::Tight) return 0.73;
+    }
+    if(tagger==JetTagging::DeepCSV_CvsB){
+      if(wp==JetTagging::Loose) return 0.345;
+      if(wp==JetTagging::Medium) return 0.29;
+      if(wp==JetTagging::Tight) return 0.10;
+    }
     if(tagger==JetTagging::DeepJet){
       if(wp==JetTagging::Loose)  return 0.0532;
       if(wp==JetTagging::Medium) return 0.3040;
       if(wp==JetTagging::Tight)  return 0.7476;
     }
-    if(tagger==JetTagging::DeepCvsB){
-      if(wp==JetTagging::Loose) return 0.4;
-      if(wp==JetTagging::Medium) return 0.34;
-      if(wp==JetTagging::Tight) return 0.05;
-    }
-    if(tagger==JetTagging::DeepCvsL){
+    if(tagger==JetTagging::DeepJet_CvsL){
       if(wp==JetTagging::Loose) return 0.03;
       if(wp==JetTagging::Medium) return 0.085;
       if(wp==JetTagging::Tight) return 0.52;
+    }
+    if(tagger==JetTagging::DeepJet_CvsB){
+      if(wp==JetTagging::Loose) return 0.4;
+      if(wp==JetTagging::Medium) return 0.34;
+      if(wp==JetTagging::Tight) return 0.05;
     }
   }
   if(DataEra=="2018"){
@@ -1088,20 +1118,30 @@ double MCCorrection::GetJetTaggingCutValue(JetTagging::Tagger tagger, JetTagging
       if(wp==JetTagging::Medium) return 0.4168;
       if(wp==JetTagging::Tight)  return 0.7665;
     }
+    if(tagger==JetTagging::DeepCSV_CvsL){
+      if(wp==JetTagging::Loose) return 0.064;
+      if(wp==JetTagging::Medium) return 0.153;
+      if(wp==JetTagging::Tight) return 0.405;
+    }
+    if(tagger==JetTagging::DeepCSV_CvsB){
+      if(wp==JetTagging::Loose) return 0.313;
+      if(wp==JetTagging::Medium) return 0.363;
+      if(wp==JetTagging::Tight) return 0.288;
+    }
     if(tagger==JetTagging::DeepJet){
       if(wp==JetTagging::Loose)  return 0.0490;
       if(wp==JetTagging::Medium) return 0.2783;
       if(wp==JetTagging::Tight)  return 0.7100;
     }
-    if(tagger==JetTagging::DeepCvsB){
-      if(wp==JetTagging::Loose) return 0.246;
-      if(wp==JetTagging::Medium) return 0.325;
-      if(wp==JetTagging::Tight) return 0.267;
-    }
-    if(tagger==JetTagging::DeepCvsL){
+    if(tagger==JetTagging::DeepJet_CvsL){
       if(wp==JetTagging::Loose) return 0.038;
       if(wp==JetTagging::Medium) return 0.099;
       if(wp==JetTagging::Tight) return 0.282;
+    }
+    if(tagger==JetTagging::DeepJet_CvsB){
+      if(wp==JetTagging::Loose) return 0.246;
+      if(wp==JetTagging::Medium) return 0.325;
+      if(wp==JetTagging::Tight) return 0.267;
     }
   }
 

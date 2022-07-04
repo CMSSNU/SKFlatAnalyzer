@@ -11,9 +11,13 @@ public:
   ~Jet();
 
   void SetArea(double area);
-  void SetGenFlavours(double pf, double hf);
+  void SetGenFlavours(int pf, int hf);
   inline int partonFlavour() const { return j_partonFlavour; }
   inline int hadronFlavour() const { return j_hadronFlavour; }
+  void SetGenHFHadronMatcher(int flavour, int origin);
+  inline int GenHFHadronMatcherFlavour() const { return j_GenHFHadronMatcher_flavour; }
+  inline int GenHFHadronMatcherOrigin() const { return j_GenHFHadronMatcher_origin; }
+  inline bool IsGenMatched() const { return j_GenHFHadronMatcher_flavour!=-999; }
   void SetTaggerResults(std::vector<double> ds);
   void SetEnergyFractions(double cH, double nH, double nEM, double cEM, double muE);
   void SetMultiplicities(double cM, double nM);
@@ -31,6 +35,12 @@ public:
     else if(s>0) return j_Res_up;
     else return j_Res_down;
   }
+  void SetBJetNNCorrection(double bJetNN_corr, double bJetNN_res);
+  inline double BJetNNCorrection() const { return j_bJetNN_corr; }
+  inline double BJetNNResolution() const { return j_bJetNN_res; }
+  void SetCJetNNCorrection(double cJetNN_corr, double cJetNN_res);
+  inline double CJetNNCorrection() const { return j_cJetNN_corr; }
+  inline double CJetNNResolution() const { return j_cJetNN_res; }
 
   void SetTightJetID(double b);
   void SetTightLepVetoJetID(double b);
@@ -46,18 +56,14 @@ private:
   double  j_area;
   int j_partonFlavour;
   int j_hadronFlavour;
-  double  j_CSVv2;
+  int j_GenHFHadronMatcher_flavour;
+  int j_GenHFHadronMatcher_origin;
   double  j_DeepCSV;
-  double  j_DeepFlavour_b;
-  double  j_DeepFlavour_bb;
-  double  j_DeepFlavour_lepb;
-  double  j_DeepFlavour_c;
-  double  j_DeepFlavour_uds;
-  double  j_DeepFlavour_g;
-  double  j_CvsL;
-  double  j_CvsB;
-  double  j_DeepCvsL;
-  double  j_DeepCvsB;
+  double  j_DeepCSV_CvsL;
+  double  j_DeepCSV_CvsB;
+  double  j_DeepJet;
+  double  j_DeepJet_CvsL;
+  double  j_DeepJet_CvsB;
   double  j_chargedHadronEnergyFraction;
   double  j_neutralHadronEnergyFraction;
   double  j_neutralEmEnergyFraction;
@@ -70,6 +76,10 @@ private:
   double j_En_down;
   double j_Res_up;
   double j_Res_down;
+  double j_bJetNN_corr;
+  double j_bJetNN_res;
+  double j_cJetNN_corr;
+  double j_cJetNN_res;
   bool j_tightJetID, j_tightLepVetoJetID;
 
   ClassDef(Jet,1)

@@ -6,18 +6,14 @@ Jet::Jet() : Particle() {
   j_area=-999.;
   j_partonFlavour=-999;
   j_hadronFlavour=-999;
-  j_CSVv2=-999.;
+  j_GenHFHadronMatcher_flavour=-999;
+  j_GenHFHadronMatcher_origin=-999;
   j_DeepCSV=-999.;
-  j_DeepFlavour_b=-999;
-  j_DeepFlavour_bb=-999;
-  j_DeepFlavour_lepb=-999;
-  j_DeepFlavour_c=-999;
-  j_DeepFlavour_uds=-999;
-  j_DeepFlavour_g=-999;
-  j_CvsL=-999.;
-  j_CvsB=-999.;
-  j_DeepCvsL=-999.;
-  j_DeepCvsB=-999.;
+  j_DeepCSV_CvsL=-999.;
+  j_DeepCSV_CvsB=-999.;
+  j_DeepJet=-999;
+  j_DeepJet_CvsL=-999;
+  j_DeepJet_CvsB=-999;
   j_chargedHadronEnergyFraction=-999.;
   j_neutralHadronEnergyFraction=-999.;
   j_neutralEmEnergyFraction=-999.;
@@ -30,6 +26,11 @@ Jet::Jet() : Particle() {
   j_En_down=1.;;
   j_Res_up = 1.;
   j_Res_down = 1.;
+  j_bJetNN_corr=1.;
+  j_bJetNN_res=-999.;
+  j_cJetNN_corr=1.;
+  j_cJetNN_res=-999.;
+  
   j_tightJetID=false;
   j_tightLepVetoJetID=false;
 }
@@ -41,23 +42,21 @@ Jet::~Jet(){
 void Jet::SetArea(double area){
   j_area = area;
 }
-void Jet::SetGenFlavours(double pf, double hf){
+void Jet::SetGenFlavours(int pf, int hf){
   j_partonFlavour = pf;
   j_hadronFlavour = hf;
 }
+void Jet::SetGenHFHadronMatcher(int flavour, int origin){
+  j_GenHFHadronMatcher_flavour = flavour;
+  j_GenHFHadronMatcher_origin = origin; 
+}
 void Jet::SetTaggerResults(std::vector<double> ds){
-  j_CSVv2             = ds.at(0);
-  j_DeepCSV           = ds.at(1);
-  j_DeepCvsL          = ds.at(2);
-  j_DeepCvsB          = ds.at(3);
-  j_DeepFlavour_b     = ds.at(4);
-  j_DeepFlavour_bb    = ds.at(5);
-  j_DeepFlavour_lepb  = ds.at(6);
-  j_DeepFlavour_c     = ds.at(7);
-  j_DeepFlavour_uds   = ds.at(8);
-  j_DeepFlavour_g     = ds.at(9);
-  j_CvsL              = ds.at(10);
-  j_CvsB              = ds.at(11);
+  j_DeepCSV           = ds.at(0);
+  j_DeepCSV_CvsL      = ds.at(1);
+  j_DeepCSV_CvsB      = ds.at(2);
+  j_DeepJet       = ds.at(3);
+  j_DeepJet_CvsL  = ds.at(4);
+  j_DeepJet_CvsB  = ds.at(5);
 }
 void Jet::SetEnergyFractions(double cH, double nH, double nEM, double cEM, double muE){
   j_chargedHadronEnergyFraction = cH;
@@ -83,7 +82,14 @@ void Jet::SetResShift(double res_up, double res_down){
   j_Res_up = res_up;
   j_Res_down = res_down;
 }
-
+void Jet::SetBJetNNCorrection(double bJetNN_corr, double bJetNN_res){
+  j_bJetNN_corr = bJetNN_corr;
+  j_bJetNN_res = bJetNN_res;
+}
+void Jet::SetCJetNNCorrection(double cJetNN_corr, double cJetNN_res){
+  j_cJetNN_corr = cJetNN_corr;
+  j_cJetNN_res = cJetNN_res;
+}
 void Jet::SetTightJetID(double b){
   j_tightJetID = b;
 }
@@ -105,19 +111,12 @@ bool Jet::PassID(TString ID) const {
 
 double Jet::GetTaggerResult(JetTagging::Tagger tg) const {
 
-  if(tg==JetTagging::CSVv2) return j_CSVv2;
-  else if(tg==JetTagging::DeepCSV) return j_DeepCSV;
-  else if(tg==JetTagging::DeepJet) return j_DeepFlavour_b+j_DeepFlavour_bb+j_DeepFlavour_lepb;
-  else if(tg==JetTagging::DeepFlavour_b) return j_DeepFlavour_b;
-  else if(tg==JetTagging::DeepFlavour_bb) return j_DeepFlavour_bb;
-  else if(tg==JetTagging::DeepFlavour_lepb) return j_DeepFlavour_lepb;
-  else if(tg==JetTagging::DeepFlavour_c) return j_DeepFlavour_c;
-  else if(tg==JetTagging::DeepFlavour_uds) return j_DeepFlavour_uds;
-  else if(tg==JetTagging::DeepFlavour_g) return j_DeepFlavour_g;
-  else if(tg==JetTagging::CvsL) return j_CvsL;
-  else if(tg==JetTagging::CvsB) return j_CvsB;
-  else if(tg==JetTagging::DeepCvsL) return j_DeepCvsL;
-  else if(tg==JetTagging::DeepCvsB) return j_DeepCvsB;
+  if(tg==JetTagging::DeepCSV) return j_DeepCSV;
+  else if(tg==JetTagging::DeepCSV_CvsL) return j_DeepCSV_CvsL;
+  else if(tg==JetTagging::DeepCSV_CvsB) return j_DeepCSV_CvsB;
+  else if(tg==JetTagging::DeepJet) return j_DeepJet;
+  else if(tg==JetTagging::DeepJet_CvsL) return j_DeepJet_CvsL;
+  else if(tg==JetTagging::DeepJet_CvsB) return j_DeepJet_CvsB;
   else{
     cout << "[Jet::GetTaggerResult] ERROR; Wrong tagger : " << tg << endl;
     return -999;

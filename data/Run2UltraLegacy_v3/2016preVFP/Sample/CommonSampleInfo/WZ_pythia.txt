@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+WZ_pythia	WZ_TuneCP5_13TeV-pythia8	51.11	7934000	7934000.0	7.934000000000e+06

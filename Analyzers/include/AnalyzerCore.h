@@ -135,6 +135,9 @@ public:
   CFBackgroundEstimator *cfEst=NULL;
   void initializeAnalyzerTools();
 
+  //==== MCweight
+  double MCweight(bool usesign=true, bool norm_1invpb=true) const;
+
   //==== Prefire
   double GetPrefireWeight(int sys);
 

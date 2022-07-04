@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+QCD_Pt_470to600	QCD_Pt_470to600_TuneCP5_13TeV_pythia8	552.2	50782000	50782000.0	5.078217007763e+07

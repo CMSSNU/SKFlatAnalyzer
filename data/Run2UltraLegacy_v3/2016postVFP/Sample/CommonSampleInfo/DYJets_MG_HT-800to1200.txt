@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+DYJets_MG_HT-800to1200	DYJetsToLL_M-50_HT-800to1200_TuneCP5_PSweights_13TeV-madgraphMLM-pythia8	0.9324216	2393976	2393976.0	2.393976000000e+06

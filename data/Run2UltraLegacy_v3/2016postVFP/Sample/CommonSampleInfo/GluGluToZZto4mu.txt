@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+GluGluToZZto4mu	GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8	0.001586	997445	997445.0	9.974450000000e+05

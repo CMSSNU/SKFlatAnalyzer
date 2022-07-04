@@ -6,18 +6,20 @@ FatJet::FatJet() : Particle() {
   j_area=-999.;
   j_partonFlavour=-999;
   j_hadronFlavour=-999;
-  j_CSVv2=-999.;
   j_DeepCSV=-999.;
-  j_DeepFlavour_b=-999;
-  j_DeepFlavour_bb=-999;
-  j_DeepFlavour_lepb=-999;
-  j_DeepFlavour_c=-999;
-  j_DeepFlavour_uds=-999;
-  j_DeepFlavour_g=-999;
-  j_CvsL=-999.;
-  j_CvsB=-999.;
-  j_DeepCvsL=-999.;
-  j_DeepCvsB=-999.;
+  j_DeepCSV_CvsL=-999.;
+  j_DeepCSV_CvsB=-999.;
+  j_particleNet_TvsQCD=-999.;
+  j_particleNet_WvsQCD=-999.;
+  j_particleNet_ZvsQCD=-999.;
+  j_particleNet_HbbvsQCD=-999.;
+  j_particleNet_HccvsQCD=-999.;
+  j_particleNet_H4qvsQCD=-999.;
+  j_particleNet_QCD=-999.;
+  j_particleNetMD_Xbb=-999.;
+  j_particleNetMD_Xcc=-999.;
+  j_particleNetMD_Xqq=-999.;
+  j_particleNetMD_QCD=-999.;
   j_chargedHadronEnergyFraction=-999.;
   j_neutralHadronEnergyFraction=-999.;
   j_neutralEmEnergyFraction=-999.;
@@ -52,18 +54,20 @@ void FatJet::SetGenFlavours(double pf, double hf){
   j_hadronFlavour = hf;
 }
 void FatJet::SetTaggerResults(std::vector<double> ds){
-  j_CSVv2             = ds.at(0);
-  j_DeepCSV           = ds.at(1);
-  j_DeepCvsL          = ds.at(2);
-  j_DeepCvsB          = ds.at(3);
-  j_DeepFlavour_b     = ds.at(4);
-  j_DeepFlavour_bb    = ds.at(5);
-  j_DeepFlavour_lepb  = ds.at(6);
-  j_DeepFlavour_c     = ds.at(7);
-  j_DeepFlavour_uds   = ds.at(8);
-  j_DeepFlavour_g     = ds.at(9);
-  j_CvsL              = ds.at(10);
-  j_CvsB              = ds.at(11);
+  j_DeepCSV           = ds.at(0);
+  j_DeepCSV_CvsL      = ds.at(1);
+  j_DeepCSV_CvsB      = ds.at(2);
+  j_particleNet_TvsQCD   = ds.at(3);
+  j_particleNet_WvsQCD   = ds.at(4);
+  j_particleNet_ZvsQCD   = ds.at(5);
+  j_particleNet_HbbvsQCD = ds.at(6);
+  j_particleNet_HccvsQCD = ds.at(7);
+  j_particleNet_H4qvsQCD = ds.at(8);
+  j_particleNet_QCD      = ds.at(9);
+  j_particleNetMD_Xbb    = ds.at(10);
+  j_particleNetMD_Xcc    = ds.at(11);
+  j_particleNetMD_Xqq    = ds.at(12);
+  j_particleNetMD_QCD    = ds.at(13);
 }
 void FatJet::SetEnergyFractions(double cH, double nH, double nEM, double cEM, double muE){
   j_chargedHadronEnergyFraction = cH;
@@ -118,19 +122,20 @@ bool FatJet::PassID(TString ID) const {
 }
 
 double FatJet::GetTaggerResult(JetTagging::Tagger tg) const{
-  if(tg==JetTagging::CSVv2) return j_CSVv2;
-  else if(tg==JetTagging::DeepCSV) return j_DeepCSV;
-  else if(tg==JetTagging::DeepJet) return j_DeepFlavour_b+j_DeepFlavour_bb+j_DeepFlavour_lepb;
-  else if(tg==JetTagging::DeepFlavour_b) return j_DeepFlavour_b;
-  else if(tg==JetTagging::DeepFlavour_bb) return j_DeepFlavour_bb;
-  else if(tg==JetTagging::DeepFlavour_lepb) return j_DeepFlavour_lepb;
-  else if(tg==JetTagging::DeepFlavour_c) return j_DeepFlavour_c;
-  else if(tg==JetTagging::DeepFlavour_uds) return j_DeepFlavour_uds;
-  else if(tg==JetTagging::DeepFlavour_g) return j_DeepFlavour_g;
-  else if(tg==JetTagging::CvsL) return j_CvsL;
-  else if(tg==JetTagging::CvsB) return j_CvsB;
-  else if(tg==JetTagging::DeepCvsL) return j_DeepCvsL;
-  else if(tg==JetTagging::DeepCvsB) return j_DeepCvsB;
+  if(tg==JetTagging::DeepCSV) return j_DeepCSV;
+  else if(tg==JetTagging::DeepCSV_CvsL) return j_DeepCSV_CvsL;
+  else if(tg==JetTagging::DeepCSV_CvsB) return j_DeepCSV_CvsB;
+  else if(tg==JetTagging::particleNet_TvsQCD) return j_particleNet_TvsQCD;
+  else if(tg==JetTagging::particleNet_WvsQCD) return j_particleNet_WvsQCD;
+  else if(tg==JetTagging::particleNet_ZvsQCD) return j_particleNet_ZvsQCD;
+  else if(tg==JetTagging::particleNet_HbbvsQCD) return j_particleNet_HbbvsQCD;
+  else if(tg==JetTagging::particleNet_HccvsQCD) return j_particleNet_HccvsQCD;
+  else if(tg==JetTagging::particleNet_H4qvsQCD) return j_particleNet_H4qvsQCD;
+  else if(tg==JetTagging::particleNet_QCD) return j_particleNet_QCD;
+  else if(tg==JetTagging::particleNetMD_Xbb) return j_particleNetMD_Xbb;
+  else if(tg==JetTagging::particleNetMD_Xcc) return j_particleNetMD_Xcc;
+  else if(tg==JetTagging::particleNetMD_Xqq) return j_particleNetMD_Xqq;
+  else if(tg==JetTagging::particleNetMD_QCD) return j_particleNetMD_QCD;
   else{
     cout << "[FatJet::GetTaggerResult] ERROR; Wrong tagger" << endl;
     return -999;

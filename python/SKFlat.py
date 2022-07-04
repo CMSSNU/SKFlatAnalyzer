@@ -301,6 +301,7 @@ for InputSample in InputSamples:
 
   this_dasname = ""
   this_xsec = -1
+  this_sumsign = -1
   this_sumw = -1
   if not IsDATA and args.Analyzer!="GetEffLumi":
     if not os.path.exists(SAMPLE_DATA_DIR+'/CommonSampleInfo/'+InputSample+'.txt'):
@@ -314,7 +315,8 @@ for InputSample in InputSamples:
       if InputSample==words[0]:
         this_dasname = words[1]
         this_xsec = words[2]
-        this_sumw = words[4]
+        this_sumsign = words[4]
+        this_sumw = words[5]
         break
 
   XsecForEachSample.append(this_xsec)
@@ -480,6 +482,7 @@ void {2}(){{
       out.write('  m.MCSample = "'+InputSample+'";\n');
       out.write('  m.IsDATA = false;\n')
       out.write('  m.xsec = '+str(this_xsec)+';\n')
+      out.write('  m.sumSign = '+str(this_sumsign)+';\n')
       out.write('  m.sumW = '+str(this_sumw)+';\n')
 
       if args.FastSim:
@@ -495,8 +498,6 @@ void {2}(){{
         out.write('    "'+flag+'",\n')
       out.write('  };\n')
 
-    for it_dir in set([os.path.dirname(lines_files[it_file].strip('\n')) for it_file in FileRanges[it_job]]):
-      out.write('  system("ls {}");\n'.format(it_dir))
     for it_file in FileRanges[it_job]:
       thisfilename = lines_files[it_file].strip('\n')
       out.write('  if(!m.AddFile("'+thisfilename+'")) exit(EIO);\n')

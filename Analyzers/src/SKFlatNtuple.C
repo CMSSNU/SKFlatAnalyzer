@@ -25,7 +25,7 @@ void SKFlatNtuple::Loop(){
   cout << "[SKFlatNtuple::Loop] Era = " << GetEra() << endl;
   cout << "[SKFlatNtuple::Loop] xsec = " << xsec << endl;
   cout << "[SKFlatNtuple::Loop] sumW = " << sumW << endl;
-  cout << "[SKFlatNtuple::Loop] weight_norm_1invpb = " << weight_norm_1invpb << endl;
+  cout << "[SKFlatNtuple::Loop] sumSign = " << sumSign << endl;
   cout << "[SKFlatNtuple::Loop] Userflags = {" << endl;
   for(unsigned int i=0; i<Userflags.size(); i++){
     cout << "[SKFlatNtuple::Loop]   \"" << Userflags.at(i) << "\"," << endl;
@@ -74,7 +74,7 @@ SKFlatNtuple::SKFlatNtuple(){
   SetEra("2017");
   xsec = 1.;
   sumW = 1.;
-  weight_norm_1invpb = 1.;
+  sumSign = 1.;
   Userflags.clear();
 }
 
@@ -104,10 +104,6 @@ void SKFlatNtuple::Init()
 
   //std::cout << "[SKFlatNtuple::Init] called" << std::endl; 
 
-  if(!IsDATA){
-    weight_norm_1invpb = xsec/sumW;
-  }
-
   // Set object pointer
   HLT_TriggerName = 0;
   jet_pt = 0;
@@ -117,18 +113,14 @@ void SKFlatNtuple::Init()
   jet_area = 0;
   jet_partonFlavour = 0;
   jet_hadronFlavour = 0;
-  jet_CSVv2 = 0;
+  jet_GenHFHadronMatcher_flavour = 0;
+  jet_GenHFHadronMatcher_origin = 0;
   jet_DeepCSV = 0;
-  jet_CvsL = 0;
-  jet_CvsB = 0;
-  jet_DeepFlavour_b = 0;
-  jet_DeepFlavour_bb = 0;
-  jet_DeepFlavour_lepb = 0;
-  jet_DeepFlavour_c = 0;
-  jet_DeepFlavour_uds = 0;
-  jet_DeepFlavour_g = 0;
-  jet_DeepCvsL = 0;
-  jet_DeepCvsB = 0;
+  jet_DeepCSV_CvsL = 0;
+  jet_DeepCSV_CvsB = 0;
+  jet_DeepJet = 0;
+  jet_DeepJet_CvsL = 0;
+  jet_DeepJet_CvsB = 0;
   jet_chargedHadronEnergyFraction = 0;
   jet_neutralHadronEnergyFraction = 0;
   jet_neutralEmEnergyFraction = 0;
@@ -148,6 +140,10 @@ void SKFlatNtuple::Init()
   jet_smearedRes = 0;
   jet_smearedResUp = 0;
   jet_smearedResDown = 0;
+  jet_bJetNN_corr = 0;
+  jet_bJetNN_res = 0;
+  jet_cJetNN_corr = 0;
+  jet_cJetNN_res = 0;
   jet_JECL1FastJet = 0;
   jet_JECFull = 0;
   fatjet_pt = 0;
@@ -157,18 +153,20 @@ void SKFlatNtuple::Init()
   fatjet_area = 0;
   fatjet_partonFlavour = 0;
   fatjet_hadronFlavour = 0;
-  fatjet_CSVv2 = 0;
   fatjet_DeepCSV = 0;
-  fatjet_DeepFlavour_b = 0;
-  fatjet_DeepFlavour_bb = 0;
-  fatjet_DeepFlavour_lepb = 0;
-  fatjet_DeepFlavour_c = 0;
-  fatjet_DeepFlavour_uds = 0;
-  fatjet_DeepFlavour_g = 0;
-  fatjet_CvsL = 0;
-  fatjet_CvsB = 0;
-  fatjet_DeepCvsL = 0;
-  fatjet_DeepCvsB = 0;
+  fatjet_DeepCSV_CvsL = 0;
+  fatjet_DeepCSV_CvsB = 0;
+  fatjet_particleNet_TvsQCD = 0;
+  fatjet_particleNet_WvsQCD = 0;
+  fatjet_particleNet_ZvsQCD = 0;
+  fatjet_particleNet_HbbvsQCD = 0;
+  fatjet_particleNet_HccvsQCD = 0;
+  fatjet_particleNet_H4qvsQCD = 0;
+  fatjet_particleNet_QCD = 0;
+  fatjet_particleNetMD_Xbb = 0;
+  fatjet_particleNetMD_Xcc = 0;
+  fatjet_particleNetMD_Xqq = 0;
+  fatjet_particleNetMD_QCD = 0;
   fatjet_tightJetID = 0;
   fatjet_tightLepVetoJetID = 0;
   fatjet_partonPdgId = 0;
@@ -248,6 +246,7 @@ void SKFlatNtuple::Init()
   electron_mHits = 0;
   electron_ecalDriven = 0;
   electron_r9 = 0;
+  electron_l1et = 0;
   electron_scEnergy = 0;
   electron_scPreEnergy = 0;
   electron_scRawEnergy = 0;
@@ -284,6 +283,8 @@ void SKFlatNtuple::Init()
   muon_TypeBit = 0;
   muon_IDBit = 0;
   muon_ishighpt = 0;
+  muon_ismedium_hip =0;
+  muon_ismedium_nohip =0;
   muon_dB = 0;
   muon_phi = 0;
   muon_eta = 0;
@@ -376,6 +377,7 @@ void SKFlatNtuple::Init()
   weight_AlphaS = 0;
   weight_PDF = 0;
   weight_Scale = 0;
+  weight_PSSyst = 0;
   weight_alpsfact = 0;
   weight_largeptscales = 0;
   weight_q0 = 0;
@@ -423,15 +425,25 @@ void SKFlatNtuple::Init()
   photon_passLooseID = 0;
   photon_passMediumID = 0;
   photon_passTightID = 0;
-  pfMET_pt_shifts = 0;
-  pfMET_phi_shifts = 0;
-  pfMET_SumEt_shifts = 0;
   pfMET_Type1_pt_shifts = 0;
   pfMET_Type1_phi_shifts = 0;
   pfMET_Type1_SumEt_shifts = 0;
   pfMET_Type1_PhiCor_pt_shifts = 0;
   pfMET_Type1_PhiCor_phi_shifts = 0;
   pfMET_Type1_PhiCor_SumEt_shifts = 0;
+  PuppiMET_Type1_pt_shifts = 0;
+  PuppiMET_Type1_phi_shifts = 0;
+  PuppiMET_Type1_SumEt_shifts = 0;
+  tau_phi = 0;
+  tau_eta = 0;
+  tau_pt = 0;
+  tau_mass = 0;
+  tau_dz = 0;
+  tau_dxy = 0;
+  tau_decaymode = 0;
+  tau_charge = 0;
+  tau_IDBit = 0;
+  tau_idDecayModeNewDMs = 0;
 
   fChain->SetBranchAddress("IsData", &IsData, &b_IsData);
   fChain->SetBranchAddress("nTotal", &nTotal, &b_nTotal);
@@ -439,6 +451,7 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("event", &event, &b_evtNum);
   fChain->SetBranchAddress("lumi", &lumi, &b_lumiBlock);
   fChain->SetBranchAddress("Rho", &Rho, &b_Rho);
+  fChain->SetBranchAddress("RhoNC", &RhoNC, &b_RhoNC);
   fChain->SetBranchAddress("nPV", &nPV, &b_nPV);
   fChain->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices, &b_Flag_goodVertices);
   fChain->SetBranchAddress("Flag_globalSuperTightHalo2016Filter", &Flag_globalSuperTightHalo2016Filter, &b_Flag_globalSuperTightHalo2016Filter);
@@ -465,18 +478,14 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("jet_area", &jet_area, &b_jet_area);
   fChain->SetBranchAddress("jet_partonFlavour", &jet_partonFlavour, &b_jet_partonFlavour);
   fChain->SetBranchAddress("jet_hadronFlavour", &jet_hadronFlavour, &b_jet_hadronFlavour);
-  fChain->SetBranchAddress("jet_CSVv2", &jet_CSVv2, &b_jet_CSVv2);
+  fChain->SetBranchAddress("jet_GenHFHadronMatcher_flavour", &jet_GenHFHadronMatcher_flavour, &b_jet_GenHFHadronMatcher_flavour);
+  fChain->SetBranchAddress("jet_GenHFHadronMatcher_origin", &jet_GenHFHadronMatcher_origin, &b_jet_GenHFHadronMatcher_origin);
   fChain->SetBranchAddress("jet_DeepCSV", &jet_DeepCSV, &b_jet_DeepCSV);
-  fChain->SetBranchAddress("jet_CvsL", &jet_CvsL, &b_jet_CvsL);
-  fChain->SetBranchAddress("jet_CvsB", &jet_CvsB, &b_jet_CvsB);
-  fChain->SetBranchAddress("jet_DeepFlavour_b", &jet_DeepFlavour_b, &b_jet_DeepFlavour_b);
-  fChain->SetBranchAddress("jet_DeepFlavour_bb", &jet_DeepFlavour_bb, &b_jet_DeepFlavour_bb);
-  fChain->SetBranchAddress("jet_DeepFlavour_lepb", &jet_DeepFlavour_lepb, &b_jet_DeepFlavour_lepb);
-  fChain->SetBranchAddress("jet_DeepFlavour_c", &jet_DeepFlavour_c, &b_jet_DeepFlavour_c);
-  fChain->SetBranchAddress("jet_DeepFlavour_uds", &jet_DeepFlavour_uds, &b_jet_DeepFlavour_uds);
-  fChain->SetBranchAddress("jet_DeepFlavour_g", &jet_DeepFlavour_g, &b_jet_DeepFlavour_g);
-  fChain->SetBranchAddress("jet_DeepCvsL", &jet_DeepCvsL, &b_jet_DeepCvsL);
-  fChain->SetBranchAddress("jet_DeepCvsB", &jet_DeepCvsB, &b_jet_DeepCvsB);
+  fChain->SetBranchAddress("jet_DeepCSV_CvsL", &jet_DeepCSV_CvsL, &b_jet_DeepCSV_CvsL);
+  fChain->SetBranchAddress("jet_DeepCSV_CvsB", &jet_DeepCSV_CvsB, &b_jet_DeepCSV_CvsB);
+  fChain->SetBranchAddress("jet_DeepFlavour", &jet_DeepJet, &b_jet_DeepJet);
+  fChain->SetBranchAddress("jet_DeepFlavour_CvsL", &jet_DeepJet_CvsL, &b_jet_DeepJet_CvsL);
+  fChain->SetBranchAddress("jet_DeepFlavour_CvsB", &jet_DeepJet_CvsB, &b_jet_DeepJet_CvsB);
   fChain->SetBranchAddress("jet_chargedHadronEnergyFraction", &jet_chargedHadronEnergyFraction, &b_jet_chargedHadronEnergyFraction);
   fChain->SetBranchAddress("jet_neutralHadronEnergyFraction", &jet_neutralHadronEnergyFraction, &b_jet_neutralHadronEnergyFraction);
   fChain->SetBranchAddress("jet_neutralEmEnergyFraction", &jet_neutralEmEnergyFraction, &b_jet_neutralEmEnergyFraction);
@@ -496,6 +505,10 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("jet_smearedRes", &jet_smearedRes, &b_jet_smearedRes);
   fChain->SetBranchAddress("jet_smearedResUp", &jet_smearedResUp, &b_jet_smearedResUp);
   fChain->SetBranchAddress("jet_smearedResDown", &jet_smearedResDown, &b_jet_smearedResDown);
+  fChain->SetBranchAddress("jet_bJetNN_corr", &jet_bJetNN_corr, &b_jet_bJetNN_corr);
+  fChain->SetBranchAddress("jet_bJetNN_res", &jet_bJetNN_res, &b_jet_bJetNN_res);
+  fChain->SetBranchAddress("jet_cJetNN_corr", &jet_cJetNN_corr, &b_jet_cJetNN_corr);
+  fChain->SetBranchAddress("jet_cJetNN_res", &jet_cJetNN_res, &b_jet_cJetNN_res);
   fChain->SetBranchAddress("jet_JECL1FastJet", &jet_JECL1FastJet, &b_jet_JECL1FastJet);
   fChain->SetBranchAddress("jet_JECFull", &jet_JECFull, &b_jet_JECFull);
   fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
@@ -505,18 +518,20 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("fatjet_area", &fatjet_area, &b_fatjet_area);
   fChain->SetBranchAddress("fatjet_partonFlavour", &fatjet_partonFlavour, &b_fatjet_partonFlavour);
   fChain->SetBranchAddress("fatjet_hadronFlavour", &fatjet_hadronFlavour, &b_fatjet_hadronFlavour);
-  fChain->SetBranchAddress("fatjet_CSVv2", &fatjet_CSVv2, &b_fatjet_CSVv2);
   fChain->SetBranchAddress("fatjet_DeepCSV", &fatjet_DeepCSV, &b_fatjet_DeepCSV);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_b", &fatjet_DeepFlavour_b, &b_fatjet_DeepFlavour_b);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_bb", &fatjet_DeepFlavour_bb, &b_fatjet_DeepFlavour_bb);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_lepb", &fatjet_DeepFlavour_lepb, &b_fatjet_DeepFlavour_lepb);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_c", &fatjet_DeepFlavour_c, &b_fatjet_DeepFlavour_c);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_uds", &fatjet_DeepFlavour_uds, &b_fatjet_DeepFlavour_uds);
-  fChain->SetBranchAddress("fatjet_DeepFlavour_g", &fatjet_DeepFlavour_g, &b_fatjet_DeepFlavour_g);
-  fChain->SetBranchAddress("fatjet_CvsL", &fatjet_CvsL, &b_fatjet_CvsL);
-  fChain->SetBranchAddress("fatjet_CvsB", &fatjet_CvsB, &b_fatjet_CvsB);
-  fChain->SetBranchAddress("fatjet_DeepCvsL", &fatjet_DeepCvsL, &b_fatjet_DeepCvsL);
-  fChain->SetBranchAddress("fatjet_DeepCvsB", &fatjet_DeepCvsB, &b_fatjet_DeepCvsB);
+  fChain->SetBranchAddress("fatjet_DeepCSV_CvsL", &fatjet_DeepCSV_CvsL, &b_fatjet_DeepCSV_CvsL);
+  fChain->SetBranchAddress("fatjet_DeepCSV_CvsB", &fatjet_DeepCSV_CvsB, &b_fatjet_DeepCSV_CvsB);
+  fChain->SetBranchAddress("fatjet_particleNet_TvsQCD", &fatjet_particleNet_TvsQCD, &b_fatjet_particleNet_TvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_WvsQCD", &fatjet_particleNet_WvsQCD, &b_fatjet_particleNet_WvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_ZvsQCD", &fatjet_particleNet_ZvsQCD, &b_fatjet_particleNet_ZvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_HbbvsQCD", &fatjet_particleNet_HbbvsQCD, &b_fatjet_particleNet_HbbvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_HccvsQCD", &fatjet_particleNet_HccvsQCD, &b_fatjet_particleNet_HccvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_H4qvsQCD", &fatjet_particleNet_H4qvsQCD, &b_fatjet_particleNet_H4qvsQCD);
+  fChain->SetBranchAddress("fatjet_particleNet_QCD", &fatjet_particleNet_QCD, &b_fatjet_particleNet_QCD);
+  fChain->SetBranchAddress("fatjet_particleNetMD_Xbb", &fatjet_particleNetMD_Xbb, &b_fatjet_particleNetMD_Xbb);
+  fChain->SetBranchAddress("fatjet_particleNetMD_Xcc", &fatjet_particleNetMD_Xcc, &b_fatjet_particleNetMD_Xcc);
+  fChain->SetBranchAddress("fatjet_particleNetMD_Xqq", &fatjet_particleNetMD_Xqq, &b_fatjet_particleNetMD_Xqq);
+  fChain->SetBranchAddress("fatjet_particleNetMD_QCD", &fatjet_particleNetMD_QCD, &b_fatjet_particleNetMD_QCD);
   fChain->SetBranchAddress("fatjet_tightJetID", &fatjet_tightJetID, &b_fatjet_tightJetID);
   fChain->SetBranchAddress("fatjet_tightLepVetoJetID", &fatjet_tightLepVetoJetID, &b_fatjet_tightLepVetoJetID);
   fChain->SetBranchAddress("fatjet_partonPdgId", &fatjet_partonPdgId, &b_fatjet_partonPdgId);
@@ -596,6 +611,7 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("electron_mHits", &electron_mHits, &b_electron_mHits);
   fChain->SetBranchAddress("electron_ecalDriven", &electron_ecalDriven, &b_electron_ecalDriven);
   fChain->SetBranchAddress("electron_r9", &electron_r9, &b_electron_r9);
+  fChain->SetBranchAddress("electron_l1et", &electron_l1et, &b_electron_l1et);
   fChain->SetBranchAddress("electron_scEnergy", &electron_scEnergy, &b_electron_scEnergy);
   fChain->SetBranchAddress("electron_scPreEnergy", &electron_scPreEnergy, &b_electron_scPreEnergy);
   fChain->SetBranchAddress("electron_scRawEnergy", &electron_scRawEnergy, &b_electron_scRawEnergy);
@@ -632,6 +648,8 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("muon_TypeBit", &muon_TypeBit, &b_muon_TypeBit);
   fChain->SetBranchAddress("muon_IDBit", &muon_IDBit, &b_muon_IDBit);
   fChain->SetBranchAddress("muon_ishighpt", &muon_ishighpt, &b_muon_ishighpt);
+  fChain->SetBranchAddress("muon_ismedium_hip", &muon_ismedium_hip, &b_muon_ismedium_hip);
+  fChain->SetBranchAddress("muon_ismedium_nohip", &muon_ismedium_nohip, &b_muon_ismedium_nohip);
   fChain->SetBranchAddress("muon_dB", &muon_dB, &b_muon_dB);
   fChain->SetBranchAddress("muon_phi", &muon_phi, &b_muon_phi);
   fChain->SetBranchAddress("muon_eta", &muon_eta, &b_muon_eta);
@@ -728,6 +746,7 @@ void SKFlatNtuple::Init()
   if(fChain->GetBranch("weight_AlphaS")) fChain->SetBranchAddress("weight_AlphaS", &weight_AlphaS, &b_weight_AlphaS);
   if(fChain->GetBranch("weight_PDF")) fChain->SetBranchAddress("weight_PDF", &weight_PDF, &b_weight_PDF);
   if(fChain->GetBranch("weight_Scale")) fChain->SetBranchAddress("weight_Scale", &weight_Scale, &b_weight_Scale);
+  if(fChain->GetBranch("weight_PSSyst")) fChain->SetBranchAddress("weight_PSSyst", &weight_PSSyst, &b_weight_PSSyst);
   if(fChain->GetBranch("weight_alpsfact")) fChain->SetBranchAddress("weight_alpsfact", &weight_alpsfact, &b_weight_alpsfact);
   if(fChain->GetBranch("weight_largeptscales")) fChain->SetBranchAddress("weight_largeptscales", &weight_largeptscales, &b_weight_largeptscales);
   if(fChain->GetBranch("weight_q0")) fChain->SetBranchAddress("weight_q0", &weight_q0, &b_weight_q0);
@@ -794,15 +813,34 @@ void SKFlatNtuple::Init()
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_pt", &pfMET_Type1_PhiCor_pt, &b_pfMET_Type1_PhiCor_pt);
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_phi", &pfMET_Type1_PhiCor_phi, &b_pfMET_Type1_PhiCor_phi);
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_SumEt", &pfMET_Type1_PhiCor_SumEt, &b_pfMET_Type1_PhiCor_SumEt);
-  fChain->SetBranchAddress("pfMET_pt_shifts", &pfMET_pt_shifts, &b_pfMET_pt_shifts);
-  fChain->SetBranchAddress("pfMET_phi_shifts", &pfMET_phi_shifts, &b_pfMET_phi_shifts);
-  fChain->SetBranchAddress("pfMET_SumEt_shifts", &pfMET_SumEt_shifts, &b_pfMET_SumEt_shifts);
   fChain->SetBranchAddress("pfMET_Type1_pt_shifts", &pfMET_Type1_pt_shifts, &b_pfMET_Type1_pt_shifts);
   fChain->SetBranchAddress("pfMET_Type1_phi_shifts", &pfMET_Type1_phi_shifts, &b_pfMET_Type1_phi_shifts);
   fChain->SetBranchAddress("pfMET_Type1_SumEt_shifts", &pfMET_Type1_SumEt_shifts, &b_pfMET_Type1_SumEt_shifts);
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_pt_shifts", &pfMET_Type1_PhiCor_pt_shifts, &b_pfMET_Type1_PhiCor_pt_shifts);
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_phi_shifts", &pfMET_Type1_PhiCor_phi_shifts, &b_pfMET_Type1_PhiCor_phi_shifts);
   fChain->SetBranchAddress("pfMET_Type1_PhiCor_SumEt_shifts", &pfMET_Type1_PhiCor_SumEt_shifts, &b_pfMET_Type1_PhiCor_SumEt_shifts);
+  fChain->SetBranchAddress("PuppiMET_pt", &PuppiMET_pt, &b_PuppiMET_pt);
+  fChain->SetBranchAddress("PuppiMET_phi", &PuppiMET_phi, &b_PuppiMET_phi);
+  fChain->SetBranchAddress("PuppiMET_SumEt", &PuppiMET_SumEt, &b_PuppiMET_SumEt);
+  fChain->SetBranchAddress("PuppiMET_Type1_pt", &PuppiMET_Type1_pt, &b_PuppiMET_Type1_pt);
+  fChain->SetBranchAddress("PuppiMET_Type1_phi", &PuppiMET_Type1_phi, &b_PuppiMET_Type1_phi);
+  fChain->SetBranchAddress("PuppiMET_Type1_SumEt", &PuppiMET_Type1_SumEt, &b_PuppiMET_Type1_SumEt);
+  fChain->SetBranchAddress("PuppiMET_Type1_PhiCor_pt", &PuppiMET_Type1_PhiCor_pt, &b_PuppiMET_Type1_PhiCor_pt);
+  fChain->SetBranchAddress("PuppiMET_Type1_PhiCor_phi", &PuppiMET_Type1_PhiCor_phi, &b_PuppiMET_Type1_PhiCor_phi);
+  fChain->SetBranchAddress("PuppiMET_Type1_PhiCor_SumEt", &PuppiMET_Type1_PhiCor_SumEt, &b_PuppiMET_Type1_PhiCor_SumEt);
+  fChain->SetBranchAddress("PuppiMET_Type1_pt_shifts", &PuppiMET_Type1_pt_shifts, &b_PuppiMET_Type1_pt_shifts);
+  fChain->SetBranchAddress("PuppiMET_Type1_phi_shifts", &PuppiMET_Type1_phi_shifts, &b_PuppiMET_Type1_phi_shifts);
+  fChain->SetBranchAddress("PuppiMET_Type1_SumEt_shifts", &PuppiMET_Type1_SumEt_shifts, &b_PuppiMET_Type1_SumEt_shifts);
+  fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
+  fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
+  fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
+  fChain->SetBranchAddress("tau_mass", &tau_mass, &b_tau_mass);
+  fChain->SetBranchAddress("tau_dz", &tau_dz, &b_tau_dz);
+  fChain->SetBranchAddress("tau_dxy", &tau_dxy, &b_tau_dxy);
+  fChain->SetBranchAddress("tau_decaymode", &tau_decaymode, &b_tau_decaymode);
+  fChain->SetBranchAddress("tau_charge", &tau_charge, &b_tau_charge);
+  fChain->SetBranchAddress("tau_IDBit", &tau_IDBit, &b_tau_IDBit);
+  fChain->SetBranchAddress("tau_idDecayModeNewDMs", &tau_idDecayModeNewDMs, &b_tau_idDecayModeNewDMs);
 
 }
 

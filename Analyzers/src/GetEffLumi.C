@@ -10,13 +10,19 @@ void GetEffLumi::initializeAnalyzer(){
 }
 
 void GetEffLumi::executeEvent(){
+  double weight = 1.;
+  double weight_sign = 1.;
+  if(!IsDATA){
+    weight = MCweight(false,false);
+    weight_sign = MCweight(true,false);
+  }
 
-  double MCweight = 1.;
-  if(!IsDATA) MCweight = gen_weight>0 ? 1. : -1. ;
-
-  FillHist("sumW", 0, MCweight, 1, 0., 1.);
+  FillHist("sumW", 0, weight, 1, 0., 1.);
+  FillHist("sumSign", 0, weight_sign, 1, 0., 1.);
   if(!IsDATA && weight_Scale->size()>0){
-    FillHist("sumW_Reweight", 0, MCweight*weight_Scale->at(0), 1, 0., 1.);
+    for(int i=0,n=weight_Scale->size();i<n;i++){
+      FillHist("sumW_Reweight", i, weight*weight_Scale->at(i), n, 0, n);
+    }
   }
 
 }
