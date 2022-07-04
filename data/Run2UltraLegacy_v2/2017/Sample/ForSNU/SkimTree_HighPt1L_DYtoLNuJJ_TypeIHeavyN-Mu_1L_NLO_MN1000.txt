@@ -1,0 +1,1 @@
+/gv0/DATA/SKFlat/Run2UltraLegacy_v2/2017/MC_SkimTree_HighPt1L/DYtoLNuJJ_TypeIHeavyN-Mu_1L_NLO_MN1000_TuneCP5_13TeV-amcatnlo-pythia8/2022_05_22_023301/SKFlatNtuple_2017_MC_0.root

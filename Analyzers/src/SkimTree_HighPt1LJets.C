@@ -6,15 +6,18 @@ void SkimTree_HighPt1LJets::initializeAnalyzer(){
   cout << "[SkimTree_HighPt1LJets::initializeAnalyzer()] gDirectory = " << gDirectory->GetName() << endl;
   newtree = fChain->CloneTree(0);
 
+  /*
   if(!IsDATA){
     newtree->SetBranchStatus("gen_*",0);
     newtree->SetBranchStatus("LHE_*",0);
     newtree->SetBranchStatus("gen_weight",1); // for MCweight()
-  }
+  }*/
 
   triggers.clear();
+
   if(DataYear==2016){
     triggers = {
+      "HLT_IsoMu24_v",
       "HLT_Mu50_v",
       "HLT_TkMu50_v",
       "HLT_Ele27_WPTight_Gsf_v",
@@ -24,6 +27,7 @@ void SkimTree_HighPt1LJets::initializeAnalyzer(){
   }
   else if(DataYear==2017){
     triggers = {
+      "HLT_IsoMu27_v",
       "HLT_Mu50_v",
       "HLT_OldMu100_v",
       "HLT_TkMu100_v",
@@ -34,6 +38,7 @@ void SkimTree_HighPt1LJets::initializeAnalyzer(){
   }
   else if(DataYear==2018){
     triggers = {
+      "HLT_IsoMu24_v",
       "HLT_Mu50_v",
       "HLT_OldMu100_v",
       "HLT_TkMu100_v",
@@ -51,55 +56,48 @@ void SkimTree_HighPt1LJets::initializeAnalyzer(){
     cout << "[SkimTree_HighPt1LJets::initializeAnalyzer]   " << triggers.at(i) << endl;
   }
 
-  LeptonPtCut = 40.;
-  AK4JetPtCut = 25.;
+  LeptonPtCut = 18.;
+  TunePPtCut = 40.;
+  AK4JetPtCut = 20.;
   AK8JetPtCut = 170.;
-
-  cout << "[SkimTree_HighPt1LJets::initializeAnalyzer] LeptonPtCut = " << LeptonPtCut << endl;
-  cout << "[SkimTree_HighPt1LJets::initializeAnalyzer] AK8JetPtCut = " << AK8JetPtCut << endl;
 
 }
 
 void SkimTree_HighPt1LJets::executeEvent(){
 
-  Event ev;
-  ev.SetTrigger(*HLT_TriggerName);
+    Event ev;
+    ev.SetTrigger(*HLT_TriggerName);
 
-  //==== Skim 1 ) trigger
-  if(! (ev.PassTrigger(triggers)) ) return;
+    //==== Skim 1 ) trigger
+    if(! (ev.PassTrigger(triggers)) ) return;
 
-  //==== Skim 2) at least two leptons (e or mu) with pt > "LeptonPtCut"
+    //==== Skim 2) at least two leptons (e or mu) with pt > "LeptonPtCut"
+    vector<Muon> muons = GetMuons("NOCUT", LeptonPtCut, 2.4);
+    vector<Muon> tunep_muons = UseTunePMuon( GetAllMuons() );
+    int n_tunep_muons = 0.;
+    for(unsigned int i=0; i<tunep_muons.size(); i++){
+        if( tunep_muons.at(i).Pt() > TunePPtCut ) n_tunep_muons++;
+    }
+    vector<Electron> electrons = GetElectrons("NOCUT", LeptonPtCut, 2.5);
 
-  vector<Muon> allmuons = UseTunePMuon( GetAllMuons() );
-  int Nmuon = 0;
-  for(unsigned int i=0; i<allmuons.size(); i++){
-    if( allmuons.at(i).Pt() > LeptonPtCut ) Nmuon++;
-  }
-  vector<Electron> electrons = GetElectrons("NOCUT", LeptonPtCut, 2.5);
-  int Nelectron = electrons.size();
+    if (n_tunep_muons + muons.size() + electrons.size() == 0) return;
 
-  if (Nelectron + Nmuon == 0) return;
+    //==== Skim 3) Jets
+    vector<FatJet> fatjets = puppiCorr->Correct( GetFatJets("tight", AK8JetPtCut, 2.4) ); //==== corret SDMass
+    int n_fatjets = 0;
+    for(unsigned int i=0; i<fatjets.size(); i++){
+        if(fatjets.at(i).SDMass()>20.) n_fatjets++;
+    }
 
-  //==== Skim 3) Jets
+    vector<Jet> jets = GetJets("tightLepVeto", AK4JetPtCut, 2.4);
 
-  vector<FatJet> allfatjets = puppiCorr->Correct( GetFatJets("tight", AK8JetPtCut, 2.4) ); //==== corret SDMass
-  int Nfatjet_SDMassCut = 0;
-  for(unsigned int i=0; i<allfatjets.size(); i++){
-    if(allfatjets.at(i).SDMass()>40.) Nfatjet_SDMassCut++;
-  }
+    if (!((n_fatjets >= 1) || (jets.size() >= 2))) return;
 
-  vector<Jet> jets = GetJets("tightLepVeto", AK4JetPtCut, 2.4);
-  int Njet = jets.size();
+    //=============================
+    //==== If survived, fill tree
+    //=============================
 
-  bool JetReq = (Njet>=2) || (Nfatjet_SDMassCut>=1);
-
-  if ( !JetReq ) return;
-
-  //=============================
-  //==== If survived, fill tree
-  //=============================
-
-  newtree->Fill();
+    newtree->Fill();
 
 }
 

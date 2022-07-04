@@ -8,10 +8,11 @@ class SKFlatNtuple
 class SKFlatValidation
 class SkimTree_Dilepton
 class SkimTree_HNFake
-class SkimTree_HighPt1L1J
+class SkimTree_HighPt1LJets
 class SkimTree_LRSMHighPt
 class SkimTree_SS2lOR3l
-class ttbar_analysis
+class signal_study
+class singlelepton_analysis
 header AnalyzerCore.h
 header ExampleRun.h
 header GetEffLumi.h
@@ -20,7 +21,8 @@ header SKFlatNtuple.h
 header SKFlatValidation.h
 header SkimTree_Dilepton.h
 header SkimTree_HNFake.h
-header SkimTree_HighPt1L1J.h
+header SkimTree_HighPt1LJets.h
 header SkimTree_LRSMHighPt.h
 header SkimTree_SS2lOR3l.h
-header ttbar_analysis.h
+header signal_study.h
+header singlelepton_analysis.h

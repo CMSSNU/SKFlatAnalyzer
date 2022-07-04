@@ -12,6 +12,8 @@ public:
 
   void SetArea(double area);
   void SetGenFlavours(double pf, double hf);
+  inline int partonFlavour() const { return j_partonFlavour; }
+  inline int hadronFlavour() const { return j_hadronFlavour; }
   void SetTaggerResults(std::vector<double> ds);
   void SetEnergyFractions(double cH, double nH, double nEM, double cEM, double muE);
   void SetMultiplicities(double cM, double nM);

@@ -1,0 +1,1 @@
+/gv0/DATA/SKFlat/Run2UltraLegacy_v2/2018/MC_SkimTree_HighPt1L/QCD_Pt_50to80_TuneCP5_13TeV_pythia8/2022_05_18_043631/SKFlatNtuple_2018_MC_0.root

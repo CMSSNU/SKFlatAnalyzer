@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumw
+WminusH_HToBB	WminusH_HToBB_WToLNu_M-125_TuneCP5_13TeV-powheg-pythia8	0.10899	4824508	4564770.0

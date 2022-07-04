@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumw
+WtoLNuJJ_TypeIHeavyN-Mu_1L_NLO_MN1000	WtoLNuJJ_TypeIHeavyN-Mu_1L_NLO_MN1000_TuneCP5_13TeV-amcatnlo-pythia8	1	55000	51402.0

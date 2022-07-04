@@ -17,7 +17,7 @@
 #pragma link C++ class MeasureJetTaggingEfficiency+;
 #pragma link C++ class SkimTree_Dilepton+;
 #pragma link C++ class SkimTree_HighPt1LJets+;
-#pragma link C++ class SkimTree_HighPt1L+;
 #pragma link C++ class singlelepton_analysis+;
+#pragma link C++ class signal_study+;
 
 #endif

@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumw
+DYtoLNuJJ_TypeIHeavyN-Mu_1L_NLO_MN500	DYtoLNuJJ_TypeIHeavyN-Mu_1L_NLO_MN500_TuneCP5_13TeV-amcatnlo-pythia8	1	135000	126710.0

@@ -19,7 +19,7 @@ public:
   vector<TString> triggers;
   void WriteHist();
 
-  double LeptonPtCut, AK4JetPtCut, AK8JetPtCut;
+  double LeptonPtCut, AK4JetPtCut, AK8JetPtCut, TunePPtCut;
 
 };
 

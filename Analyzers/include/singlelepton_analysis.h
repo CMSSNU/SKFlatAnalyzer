@@ -26,13 +26,16 @@ public:
   std::vector<TString> muonTriggers, electronTriggers;
 
   double muonPtCut, electronPtCut, jetPtCut, fatjetPtCut;
+  double leptonPtCut;
   void DrawObjectPlots(TString region, double weight, std::vector<Muon> muons, std::vector<Electron> electrons, std::vector<Jet> jets, std::vector<Jet> nonbjets, std::vector<Jet> bjets, std::vector<FatJet> fatjets, std::vector<FatJet> nonbbfatjets, std::vector<FatJet> bbfatjets, Particle missingEt);
-  void DrawSignalPlots(TString region, double weight, Lepton lepton, Particle missingEt, Particle recoSecondaryBoson, Particle recoHeavyNeutrino, Particle recoPrimaryBoson);
 
   std::vector<Muon> allMuons;
   std::vector<Electron> allElectrons;
   std::vector<Jet> allJets;
   std::vector<FatJet> allFatJets;
+
+  double GetReconstructedNeutrinoDet(Lepton lepton, Particle missingEt);
+  Particle GetReconstructedNeutrino(Lepton lepton, Particle missingEt);
 
   TLorentzVector FindZCandidate(std::vector<Lepton> leptons);
   TLorentzVector FindZCandidate(std::vector<Muon> leptons);

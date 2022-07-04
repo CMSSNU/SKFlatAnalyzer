@@ -1,0 +1,1 @@
+data/Run2UltraLegacy_v2/2017/Sample/CommonSampleInfo/WZ_pythia.txt:WZ_pythia WZ_TuneCP5_13TeV-pythia8 51.11 7898000 7898000.0 

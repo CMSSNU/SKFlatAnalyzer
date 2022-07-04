@@ -21,6 +21,7 @@
 #include "Muon.h"
 #include "Electron.h"
 #include "Photon.h"
+#include "FatJet.h"
 #include "Jet.h"
 #include "Gen.h"
 
@@ -121,7 +122,9 @@ public:
 
   //==== 2a) Jet-by-jet updating of the b-tagging status
   bool IsBTagged_2a(JetTagging::Parameters jtp, const Jet& jet, string Syst="central");
+  bool IsBTagged_2a(JetTagging::Parameters jtp, const FatJet& jet, string Syst="central");
 
+  double TopPtReweight(const std::vector<Gen>& gens );
 };
 
 #endif

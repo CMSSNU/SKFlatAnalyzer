@@ -279,11 +279,11 @@ double MCCorrection::MuonID_SF(TString ID, double eta, double pt, int sys){
   else{
     this_bin = this_hist->FindBin(pt,eta);
   }
-
+  this_bin = this_hist->FindBin(eta,pt);
   value = this_hist->GetBinContent(this_bin);
   error = this_hist->GetBinError(this_bin);
 
-  //cout << "[MCCorrection::MuonID_SF] value = " << value << endl;
+  //cout << "[MCCorrection::MuonID_SF] value = " << value << " " << pt << " " << eta << " " << this_bin << endl;
 
   return value+double(sys)*error;
 
@@ -327,7 +327,7 @@ double MCCorrection::MuonISO_SF(TString ID, double eta, double pt, int sys){
   else{
     this_bin = this_hist->FindBin(pt,eta);
   }
-
+  this_bin = this_hist->FindBin(eta,pt);
   value = this_hist->GetBinContent(this_bin);
   error = this_hist->GetBinError(this_bin);
 
@@ -1243,61 +1243,65 @@ double MCCorrection::GetBTaggingReweight_1a(const vector<Jet>& jets, JetTagging:
   return SF;
 }
 
-double MCCorrection::GetBTaggingReweight_1d(const vector<Jet>& jets, JetTagging::Parameters jtp, string Syst){
+bool MCCorrection::IsBTagged_2a(JetTagging::Parameters jtp, const FatJet& jet, string Syst){
 
-  if(IsDATA) return 1.;
+  double this_discr = jet.GetTaggerResult(jtp.j_Tagger);
+  double cutValue = GetJetTaggingCutValue(jtp.j_Tagger, jtp.j_WP);
 
-  if(jtp.j_MeasurmentType_Light!=JetTagging::iterativefit || 
-     jtp.j_MeasurmentType_Heavy!=JetTagging::iterativefit){
-    cout << "[MCCorrection::GetBTaggingReweight_1d] This method only works for iterativefit method" << endl;
-    cout << "[MCCorrection::GetBTaggingReweight_1d] jtp.j_MeasurmentType_Light = " << jtp.j_MeasurmentType_Light << endl;
-    cout << "[MCCorrection::GetBTaggingReweight_1d] jtp.j_MeasurmentType_Heavy = " << jtp.j_MeasurmentType_Heavy << endl;
-    exit(ENODATA);
-    return 1.;
+  bool isBTagged = this_discr > cutValue;
+
+  if(IsDATA) return isBTagged;
+
+  //==== Set seed
+  unsigned int runNum_uint  = static_cast <unsigned int> (run);
+  unsigned int lumiNum_uint = static_cast <unsigned int> (lumi);
+  unsigned int evNum_uint   = static_cast <unsigned int> (event);
+  unsigned int jet0eta = uint32_t(fabs(jet.Eta())/0.01);
+  int m_nomVar=1;
+  std::uint32_t seed = jet0eta + m_nomVar + (lumiNum_uint<<10) + (runNum_uint<<20) + evNum_uint;
+
+  TRandom3 rand_(seed);
+
+  bool newBTag = isBTagged;
+
+  //=== Get SF
+  double Btag_SF =  GetJetTaggingSF(jtp,
+                                    jet.hadronFlavour(),
+                                    jet.Pt(),
+                                    jet.Eta(),
+                                    jet.GetTaggerResult(jtp.j_Tagger),
+                                    Syst );
+
+
+  if(Btag_SF == 1) return newBTag; //no correction needed
+
+  //=== throw random number to apply correction
+  float coin = rand_.Uniform(1.);
+  if(Btag_SF > 1){
+    //=== use this if SF>1
+
+    if( !isBTagged ) {
+
+      double Btag_eff = GetMCJetTagEff(jtp.j_Tagger, jtp.j_WP, jet.hadronFlavour(), jet.Pt(), jet.Eta());
+      //=== fraction of jets that need to be upgraded
+      float mistagPercent = (1.0 - Btag_SF) / (1.0 - (1./Btag_eff) );
+
+      //=== upgrade to tagged
+      if( coin < mistagPercent ) {newBTag = true;}
+    }
+
+  }else{
+    //=== use this if SF<1
+
+    //=== downgrade tagged to untagged
+    if( isBTagged && coin > Btag_SF ) {newBTag = false;}
+
   }
 
-  double rew(1.);
-
-  for(unsigned int i=0; i<jets.size(); i++){
-
-    int abs_hadFlavour = abs(jets.at(i).hadronFlavour());
-    TString tmp_Syst(Syst);
-
-/*
-    systvec_L = {"up_hf","down_hf","up_jes","down_jes","up_lfstats1","down_lfstats1","up_lfstats2","down_lfstats2"};
-    systvec_C = {"up_cferr1","down_cferr1","up_cferr2","down_cferr2"};
-    systvec_B = {"up_hfstats1","down_hfstats1","up_hfstats2","down_hfstats2","up_lf","down_lf","up_jes","down_jes"};
-*/
-
-    bool GoodSyst = false;
-    if(abs_hadFlavour==5){
-      if(      tmp_Syst.Contains(TRegexp("hfstats[1-2]$")) ) GoodSyst = true;
-      else if( tmp_Syst.Contains(TRegexp("lf$"))           ) GoodSyst = true;
-      else if( tmp_Syst.Contains(TRegexp("jes$"))          ) GoodSyst = true;
-    }
-    else if(abs_hadFlavour==4){
-      if(      tmp_Syst.Contains(TRegexp("cferr[1-2]$"))   ) GoodSyst = true;
-    }
-    else{
-      if(      tmp_Syst.Contains(TRegexp("hf$")) )           GoodSyst = true;
-      else if( tmp_Syst.Contains(TRegexp("jes$")) )          GoodSyst = true;
-      else if( tmp_Syst.Contains(TRegexp("lfstats[1-2]$")) ) GoodSyst = true;
-    }
-
-    if(!GoodSyst) tmp_Syst = "central";
-
-    double this_SF = GetJetTaggingSF(jtp,
-                                     jets.at(i).hadronFlavour(),
-                                     jets.at(i).Pt(),
-                                     jets.at(i).Eta(),
-                                     jets.at(i).GetTaggerResult(jtp.j_Tagger),
-                                     string(tmp_Syst) );
-    rew *= this_SF;
-  }
-
-  return rew;
+  return newBTag;
 
 }
+
 
 bool MCCorrection::IsBTagged_2a(JetTagging::Parameters jtp, const Jet& jet, string Syst){
 
@@ -1358,3 +1362,32 @@ bool MCCorrection::IsBTagged_2a(JetTagging::Parameters jtp, const Jet& jet, stri
 
 }
 
+double MCCorrection::TopPtReweight(const std::vector<Gen>& gens ){
+
+   double topPt = -1, antitopPt = -1;
+
+   for (unsigned int i=0; i<gens.size(); i++){
+       if (gens.at(i).PID() == 6){
+           if (gens.at(i).isLastCopy()){
+               topPt = gens.at(i).Pt();
+           }
+       }
+       if (gens.at(i).PID() == -6){
+           if (gens.at(i).isLastCopy()){
+               antitopPt = gens.at(i).Pt();
+           }
+       }
+
+       if (topPt >= 0. && antitopPt >= 0.) break;
+   }
+
+   double reweight = 1.;
+
+   if (topPt <= 800. && antitopPt <= 800){
+       reweight *= sqrt( exp(0.0615 - 0.0005 * topPt) );
+       reweight *= sqrt( exp(0.0615 - 0.0005 * antitopPt) );
+   }
+
+   return reweight;
+
+}
