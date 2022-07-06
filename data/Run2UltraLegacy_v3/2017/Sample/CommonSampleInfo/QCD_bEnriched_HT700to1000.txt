@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+QCD_bEnriched_HT700to1000	QCD_bEnriched_HT700to1000_TuneCP5_13TeV-madgraph-pythia8	298.8	1881618	1881618.0	1.881618000000e+06

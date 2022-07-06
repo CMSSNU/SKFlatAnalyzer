@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+VHToNonbb	VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8	0.952	1208288	594496.0	7.023767587402e+06

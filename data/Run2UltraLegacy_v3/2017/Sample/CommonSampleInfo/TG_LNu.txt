@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+TG_LNu	TGJets_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8	0.989	14008000	2848460.0	1.408476047496e+07

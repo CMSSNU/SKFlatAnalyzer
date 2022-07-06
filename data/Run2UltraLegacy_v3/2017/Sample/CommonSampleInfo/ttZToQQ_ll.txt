@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+ttZToQQ_ll	TTZToQQ_Dilept_TuneCP5_13TeV-amcatnlo-pythia8	0.0568	6596000	3323040.0	3.752398346150e+05

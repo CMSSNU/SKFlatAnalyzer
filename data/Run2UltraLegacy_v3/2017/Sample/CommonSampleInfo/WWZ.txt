@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+WWZ	WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8	0.1651	178000	161398.0	3.038629124939e+04

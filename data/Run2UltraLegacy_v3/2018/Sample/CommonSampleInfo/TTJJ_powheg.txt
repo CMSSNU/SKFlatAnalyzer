@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+TTJJ_powheg	TTToHadronic_TuneCP5_13TeV-powheg-pythia8	377.96	343248000	340474926.0	1.077487390952e+11

@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+GluGluHToZZTo4L	GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8	0.01212	940000	930282.0	2.713827959466e+07

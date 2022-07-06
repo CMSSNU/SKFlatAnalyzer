@@ -1,1 +1,26 @@
 # PD period NEvent
+DoubleEG	B	54206718
+DoubleEG	C	59675381
+DoubleEG	D	25209987
+DoubleEG	E	54624312
+DoubleEG	F	72351214
+DoubleMuon	B	13598353
+DoubleMuon	C	46007861
+DoubleMuon	D	22646081
+DoubleMuon	E	50538352
+DoubleMuon	F	75300854
+MuonEG	B	4160430
+MuonEG	C	14489143
+MuonEG	D	9012928
+MuonEG	E	18703362
+MuonEG	F	25342217
+SingleElectron	B	56595110
+SingleElectron	C	126584724
+SingleElectron	D	50610320
+SingleElectron	E	100205122
+SingleElectron	F	126059593
+SingleMuon	B	128742175
+SingleMuon	C	153659512
+SingleMuon	D	69031074
+SingleMuon	E	151698383
+SingleMuon	F	235942694

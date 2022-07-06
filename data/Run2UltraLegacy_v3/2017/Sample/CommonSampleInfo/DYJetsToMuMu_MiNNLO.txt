@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+DYJetsToMuMu_MiNNLO	DYJetsToMuMu_M-50_massWgtFix_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos	1976.17	161884397	135902379.0	3.211048797366e+11

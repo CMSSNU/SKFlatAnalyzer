@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+ZZTo4L_powheg	ZZTo4L_TuneCP5_13TeV_powheg_pythia8	1.256	99388000	98378104.0	1.316692550128e+08

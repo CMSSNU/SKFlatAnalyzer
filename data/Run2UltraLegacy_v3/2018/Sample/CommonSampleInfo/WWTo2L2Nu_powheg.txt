@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+WWTo2L2Nu_powheg	WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8	12.178	9994000	9956710.0	1.107952803933e+08

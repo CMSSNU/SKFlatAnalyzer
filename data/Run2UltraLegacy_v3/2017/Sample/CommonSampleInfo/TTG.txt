@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+TTG	TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8	3.757	3534208	1261452.0	2.215755663350e+07

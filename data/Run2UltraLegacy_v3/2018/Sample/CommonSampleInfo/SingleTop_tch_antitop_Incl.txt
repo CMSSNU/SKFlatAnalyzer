@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+SingleTop_tch_antitop_Incl	ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8	80.95	95833000	90216506.0	6.128118195239e+09

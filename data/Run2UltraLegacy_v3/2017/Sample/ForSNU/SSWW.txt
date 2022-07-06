@@ -1,0 +1,6 @@
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_1.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_2.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_3.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_4.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_5.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/SSWW_TuneCP5_13TeV-madgraph-pythia8/220614_133556/0000/SKFlatNtuple_2017_MC_6.root

@@ -17,7 +17,7 @@ MuonEG	F	14000933
 SingleElectron	B_ver2	240044046
 SingleElectron	C	93452226
 SingleElectron	D	146495223
-SingleElectron	E	111985251
+SingleElectron	E	113117753
 SingleElectron	F	61307438
 SingleMuon	B_ver2	154054252
 SingleMuon	C	64804223

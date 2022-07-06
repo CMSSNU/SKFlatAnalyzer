@@ -1,0 +1,15 @@
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_1.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_2.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_3.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_4.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_5.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_6.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_7.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_8.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_9.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_10.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_11.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_12.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_13.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_14.root
+/gv0/DATA/SKFlat/Run2UltraLegacy_v3/2017/MC/QCD_bEnriched_HT1500to2000_TuneCP5_13TeV-madgraph-pythia8/220614_132929/0000/SKFlatNtuple_2017_MC_15.root

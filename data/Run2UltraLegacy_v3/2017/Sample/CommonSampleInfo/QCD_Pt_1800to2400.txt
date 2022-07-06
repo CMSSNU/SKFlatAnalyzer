@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+QCD_Pt_1800to2400	QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8	0.08745	5488000	5488000.0	5.488000000000e+06

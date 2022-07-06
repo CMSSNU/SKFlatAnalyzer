@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+WJets_amcatnlo	WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8	61526.7	29117828	19974968.0	5.018116766811e+12
