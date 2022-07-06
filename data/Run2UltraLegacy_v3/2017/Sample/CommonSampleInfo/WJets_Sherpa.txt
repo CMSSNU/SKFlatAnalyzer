@@ -1,0 +1,2 @@
+# alias PD xsec nmc sumsign sumw
+WJets_Sherpa	WJetsToLNu_012JetsNLO_34JetsLO_EWNLOcorr_13TeV-sherpa	61526.7	158964000	99359844.0	4.757654220352e+16
