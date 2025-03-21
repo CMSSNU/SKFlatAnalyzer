@@ -1,0 +1,4 @@
+[ libGEScaleSyst.so ]
+# List of selected classes
+class GEScaleSyst
+header GEScaleSyst.h

@@ -1,0 +1,15 @@
+executable = ExampleRun_2018_DYJets.sh
+jobbatchname = ExampleRun_2018_DYJets
+universe   = vanilla
+arguments  = $(Process)
+log = condor.log
+getenv     = True
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+output = job_$(Process).log
+error = job_$(Process).err
+transfer_output_remaps = "hists.root = output/hists_$(Process).root"
+
+
+queue 10
+

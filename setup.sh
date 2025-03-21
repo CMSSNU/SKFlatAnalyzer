@@ -10,7 +10,7 @@ export DATA_DIR=$SKFlat_WD/data/$SKFlatV
 #### use cvmfs for root ####
 export CMS_PATH=/cvmfs/cms.cern.ch
 source $CMS_PATH/cmsset_default.sh
-export SCRAM_ARCH=slc9_amd64_gcc12
+export SCRAM_ARCH=el9_amd64_gcc12
 export cmsswrel='cmssw/CMSSW_15_0_1'
 cd /cvmfs/cms.cern.ch/$SCRAM_ARCH/cms/$cmsswrel/src
 echo "@@@@ SCRAM_ARCH = "$SCRAM_ARCH
@@ -68,6 +68,7 @@ if [ "$1" = "-q" ];then
     return
 fi
 
+alias python="python3"
 ## Todo list ##
 python python/PrintToDoLists.py
 source $SKFlat_WD/tmp/ToDoLists.sh
@@ -78,8 +79,8 @@ printf "> Current SKFlatAnalyzer branch : "${BRed}$CurrentGitBranch${Color_Off}"
 echo "-----------------------------------------------------------------"
 
 ## Log Dir ##
-python python/PrintOldLogs.py
-source $SKFlat_WD/tmp/OldLogs.sh
-rm $SKFlat_WD/tmp/OldLogs.sh
+#python python/PrintOldLogs.py
+#source $SKFlat_WD/tmp/OldLogs.sh
+#rm $SKFlat_WD/tmp/OldLogs.sh
 echo "* Your Log Directory Usage (ctrl+c to skip)"
 du -sh $SKFlatRunlogDir
