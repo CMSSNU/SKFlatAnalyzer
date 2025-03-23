@@ -18,7 +18,8 @@ echo "@@@@ cmsswrel = "$cmsswrel
 echo "@@@@ scram..."
 eval `scramv1 runtime -sh`
 cd -
-source /cvmfs/cms.cern.ch/$SCRAM_ARCH/cms/$cmsswrel/external/$SCRAM_ARCH/bin/thisroot.sh
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/bin/python2.7:$LD_LIBRARY_PATH
+
 
 if [[ $HOSTNAME == *"ui"*".sdfarm.kr"* ]]; then
 
