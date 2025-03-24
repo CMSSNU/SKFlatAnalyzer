@@ -41,7 +41,7 @@ make
 
 ## Test job
 ```bash
-SKFlat.py -a ExampleRun -i DYJets -n 50 -y 2016 &
+SKFlat.py -a ExampleRun -i DYJets -n 50 -e 2018 &
 ```
 
 ## Making a new Ananlyzer
