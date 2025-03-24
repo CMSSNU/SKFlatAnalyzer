@@ -1,0 +1,20 @@
+[ libAnalyzerTools.so libDataFormats.so libHist.so ]
+# List of selected classes
+class AnalyzerParameter
+class CFBackgroundEstimator
+class FakeBackgroundEstimator
+class GenFinderForDY
+class GeneralizedEndpoint
+class LHAPDFHandler
+class MCCorrection
+class PDFReweight
+class PuppiSoftdropMassCorr
+header AnalyzerParameter.h
+header CFBackgroundEstimator.h
+header FakeBackgroundEstimator.h
+header GenFinderForDY.h
+header GeneralizedEndpoint.h
+header LHAPDFHandler.h
+header MCCorrection.h
+header PDFReweight.h
+header PuppiSoftdropMassCorr.h
